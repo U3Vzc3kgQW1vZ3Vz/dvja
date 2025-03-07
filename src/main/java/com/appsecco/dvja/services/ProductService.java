@@ -1,7 +1,8 @@
 package com.appsecco.dvja.services;
 
 import com.appsecco.dvja.models.Product;
-import com.appsecco.dvja.models.User;
+import com.appsecco.dvja.models.Product;
+import com.appsecco.dvja.models.Product;
 import com.mysql.jdbc.PreparedStatement;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -33,29 +34,31 @@ public class ProductService {
         logger.debug("Saving product with name: " + product.getName());
         ResultSet rs = null;
         PreparedStatement pstmt = null;
-        ArrayList<User> resultList = new ArrayList<User>();
-        if (user.getPassword() != null)
-            user.setPassword(hashEncodePassword(user.getPassword()));
-        User newUser = findByLogin(user.getLogin());
+        ArrayList<Product> resultList = new ArrayList<Product>();
+        Product newProduct = findByCode(product.getCode());
 
         if (DbConnectionService.open()) {
 
             try {
-                if (newUser == null) {
-                    String queryString = "INSERT INTO users (id,name,login,email,password) VALUES (default,?, ?, ?,?)";
+                if (newProduct == null) {
+                    String queryString = "INSERT INTO products (id,name,description,code,tags) VALUES (default,?, ?, ?,?)";
                     pstmt = (PreparedStatement) DbConnectionService.cnn.prepareStatement(queryString);
-                    pstmt.setString(2, user.getLogin());
-                    pstmt.setString(1, user.getName());
-                    pstmt.setString(4, user.getPassword());
-                    pstmt.setString(3, user.getEmail());
-                }
-                else {
-                    String queryString = "UPDATE users set password=? where id=?";
+                    pstmt.setString(2, product.getCode());
+                    pstmt.setString(1, product.getName());
+                    pstmt.setString(4, product.getDescription());
+                    pstmt.setString(3, product.getTags());
+                } else {
+                    String queryString = "UPDATE products set description=?,name=?,code=?,tags=? where id=?";
                     pstmt = (PreparedStatement) DbConnectionService.cnn.prepareStatement(queryString);
-                    pstmt.setString(1, user.getPassword());
-                    pstmt.setInt(2, newUser.getId());
+                    pstmt.setString(3, product.getCode());
+                    pstmt.setString(2, product.getName());
+                    pstmt.setString(1, product.getDescription());
+                    pstmt.setString(4, product.getTags());
+                    pstmt.setInt(5, newProduct.getId());
+                    System.out.println(pstmt.toString());
                 }
-                boolean user_added = pstmt.execute();
+                boolean product_added = pstmt.execute();
+                System.out.println(product_added);
                 System.out.println(pstmt.toString());
 
             } catch (SQLException e) {
@@ -63,23 +66,131 @@ public class ProductService {
             } finally {
                 DbConnectionService.close(pstmt, rs);
             }
+        }
     }
-
     public Product find(int id) {
-        return entityManager.find(Product.class, id);
+        List<Product> resultList = new ArrayList<>();
+        ResultSet rs = null;
+        PreparedStatement pstmt = null;
+        String queryString = "SELECT * FROM products where id = ?";
+        if (DbConnectionService.open()) {
+            try {
+                pstmt = (PreparedStatement) DbConnectionService.cnn.prepareStatement(queryString);
+                pstmt.setInt(1, id);
+                rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    Product product = new Product();
+                    product.setCode(rs.getString("code"));
+                    product.setDescription(rs.getString("description"));
+                    product.setName(rs.getString("name"));
+                    product.setTags(rs.getString("tags"));
+                    product.setId(rs.getInt("id"));
+                    resultList.add(product);
+                }
+            } catch (SQLException e) {
+                System.out.println(pstmt.toString());
+            } finally {
+                DbConnectionService.close(pstmt, rs);
+            }
+        }
+        if (resultList.size() > 0)
+            return resultList.get(0);
+        else
+            return null;
     }
-
     public List<Product> findAll() {
-        Query query = entityManager.createQuery("SELECT p FROM Product p");
-        List<Product> resultList = query.getResultList();
+        ResultSet rs = null;
+        PreparedStatement pstmt = null;
+        ArrayList<Product> resultList = new ArrayList<>();
+        String queryString = "SELECT * FROM products";
+        if (DbConnectionService.open()) {
+            try {
+                pstmt = (PreparedStatement) DbConnectionService.cnn.prepareStatement(queryString);
+                rs = pstmt.executeQuery();
+                while (rs.next()) {    
+                    Product product = new Product();
+                    product.setCode(rs.getString("code"));
+                    product.setDescription(rs.getString("description"));
+                    product.setName(rs.getString("name"));
+                    product.setTags(rs.getString("tags"));
+                    product.setId(rs.getInt("id"));
+                    resultList.add(product);
+                }
+            } catch (SQLException e) {
+                System.out.println(pstmt.toString());
+            } finally {
+                DbConnectionService.close(pstmt, rs);
+            }
+
+        }
 
         return resultList;
+
     }
 
     public List<Product> findContainingName(String name) {
-        Query query = entityManager.createQuery("SELECT p FROM Product p WHERE p.name LIKE '%" + name + "%'");
-        List<Product> resultList = query.getResultList();
+
+
+
+        ResultSet rs = null;
+        PreparedStatement pstmt = null;
+        ArrayList<Product> resultList = new ArrayList<>();
+        String queryString = "SELECT * FROM products where code like ?";
+        if (DbConnectionService.open()) {
+            try {
+                pstmt = (PreparedStatement) DbConnectionService.cnn.prepareStatement(queryString);
+                pstmt.setString(1, "%" + name + "%");
+                rs = pstmt.executeQuery();
+                while (rs.next()) {
+                    Product product = new Product();
+                    product.setCode(rs.getString("code"));
+                    product.setDescription(rs.getString("description"));
+                    product.setName(rs.getString("name"));
+                    product.setTags(rs.getString("tags"));
+                    product.setId(rs.getInt("id"));
+                    resultList.add(product);
+                }
+            } catch (SQLException e) {
+                System.out.println(pstmt.toString());
+            } finally {
+                DbConnectionService.close(pstmt, rs);
+            }
+
+        }
 
         return resultList;
     }
+    public Product findByCode(String code) {
+
+            List<Product> resultList = new ArrayList<>();
+            ResultSet rs = null;
+            PreparedStatement pstmt = null;
+            String queryString = "SELECT * FROM products where code = ?";
+            if (DbConnectionService.open()) {
+                try {
+                    pstmt = (PreparedStatement) DbConnectionService.cnn.prepareStatement(queryString);
+                    pstmt.setString(1, code);
+                    rs = pstmt.executeQuery();
+                    if (rs.next()) {
+                        Product product = new Product();
+                        product.setCode(rs.getString("code"));
+                        product.setDescription(rs.getString("description"));
+                        product.setName(rs.getString("name"));
+                        product.setTags(rs.getString("tags"));
+                        product.setId(rs.getInt("id"));
+                        resultList.add(product);
+                    }
+                } catch (SQLException e) {
+                    System.out.println(pstmt.toString());
+                } finally {
+                    DbConnectionService.close(pstmt, rs);
+                }
+
+
+            }
+            if (resultList.size() > 0)
+                return resultList.get(0);
+            else
+                return null;
+        }
 }

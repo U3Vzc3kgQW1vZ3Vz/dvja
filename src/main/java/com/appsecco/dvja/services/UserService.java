@@ -169,7 +169,7 @@ User newUser = findByLogin(user.getLogin());
         else
             return null;
     }
-
+//SQL injection sink
     public User findByLoginUnsafe(String login) {
         List<User> resultList = new ArrayList<>();
         ResultSet rs = null;

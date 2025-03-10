@@ -12,9 +12,12 @@ import java.util.Enumeration;
 public class DbConnectionService {
     public static String driver = "com.mysql.jdbc.Driver";
 
-    public static Config config= null;
+    private static Config config= null;
 
     public static Connection cnn;
+    public static void setConfig(Config config) {
+        DbConnectionService.config = config;
+    }
     public static void cleanup() {
         try {
             // Unregister JDBC drivers
@@ -33,7 +36,7 @@ public class DbConnectionService {
     public static boolean open() {
         try {
  if(config==null) {
-     config = new Config();
+     DbConnectionService.setConfig(new Config());
  }
             if (cnn == null || cnn.isClosed()) {
                 Class.forName(driver);

@@ -19,6 +19,7 @@
             <s:fielderror theme="bootstrap"/>
 
             <s:form action="editUser" method="post" theme="bootstrap">
+<%--                IDOR sink--%>
                 <s:hidden name="userId" />
                 <s:textfield
                     label="Email"

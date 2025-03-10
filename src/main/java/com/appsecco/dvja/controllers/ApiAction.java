@@ -37,6 +37,7 @@ public class ApiAction extends BaseController {
         boolean isAdmin = false;
 
         for(Cookie c: getServletRequest().getCookies()) {
+//            IDOR sink
             if(c.getName().equals("admin") && c.getValue().equals("1")) {
                 isAdmin = true;
                 break;
@@ -74,10 +75,15 @@ public class ApiAction extends BaseController {
 
         User user = userService.findByLogin(getLogin());
 
-        results.put("login", getLogin());
-        results.put("present", "true");
-        results.put("email", user.getEmail());
+if(user != null) {
+    results.put("login", getLogin());
+    results.put("present", "true");
+    results.put("email", user.getEmail());
 
+}
+else {
+    results.put("present", "false");
+}
         return renderJSON(results);
     }
 }

@@ -20,6 +20,7 @@
 
         <s:if test="searchQuery != null">
             <p class="bg-success">
+<%--                Reflected XSS--%>
                 Listing products with <strong>search query: </strong> <%= request.getParameter("searchQuery") %>
                 &nbsp; &nbsp;
                 <small><a href="<s:url action="listProduct"/>">
@@ -39,6 +40,7 @@
             <s:iterator value="products">
             <tr>
                 <td><s:property value="id"/></td>
+<%--                Stored XSS sink--%>
                 <td><s:property value="name" escape="false"/></td>
                 <td><s:property value="code"/></td>
                 <td><s:property value="tags"/></td>

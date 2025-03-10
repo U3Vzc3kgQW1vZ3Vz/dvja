@@ -154,10 +154,15 @@
             <interceptor-ref name="authenticationStack"/>
             <result>/WEB-INF/dvja/WSTG_ATHZ_01.jsp</result>
         </action>
+        <action name="WSTG_INPV_04">
+            <interceptor-ref name="authenticationStack"/>
+            <result>/WEB-INF/dvja/WSTG_INPV_04.jsp</result>
+        </action>
     </package>
 
     <package name="api" namespace="/api" extends="struts-default">
         <action name="ping" class="com.appsecco.dvja.controllers.ApiAction" method="ping"></action>
+        <action name="wrap" class="com.appsecco.dvja.controllers.ApiAction" method="pingWrapper"></action>
         <action name="userList" class="com.appsecco.dvja.controllers.ApiAction" method="adminShowUsers"></action>
     </package>
     <package name="bespoke" namespace="/bespoke" extends="struts-default">

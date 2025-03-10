@@ -21,7 +21,6 @@ public class Config {
             String fullPath = URLDecoder.decode(path, "UTF-8");
             String pathArr[] = fullPath.split("/classes/");
             fullPath = pathArr[0];
-            System.out.println(fullPath);
             configFile.load(new FileInputStream(fullPath + "/config.properties"));
         } catch (Exception eta) {
             eta.printStackTrace();

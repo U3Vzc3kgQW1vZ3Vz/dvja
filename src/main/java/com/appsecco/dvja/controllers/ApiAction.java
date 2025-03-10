@@ -6,6 +6,12 @@ import com.appsecco.dvja.services.UserService;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.Cookie;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +21,7 @@ public class ApiAction extends BaseController {
 
     private UserService userService;
     private String login;
-
+    private int role;
     public UserService getUserService() {
         return userService;
     }
@@ -26,6 +32,12 @@ public class ApiAction extends BaseController {
 
     public String getLogin() {
         return login;
+    }
+    public int getRole() {
+        return role;
+    }
+    public void setRole(int role) {
+        this.role = role;
     }
 
     public void setLogin(String login) {
@@ -72,7 +84,12 @@ public class ApiAction extends BaseController {
             results.put("error", "Login not set");
             return renderJSON(results);
         }
-
+        if(role == 0) {
+            results.put("role:", "no role");
+        }
+        else{
+            results.put("role:", Integer.toString(role));
+        }
         User user = userService.findByLogin(getLogin());
 
 if(user != null) {
@@ -84,13 +101,45 @@ if(user != null) {
 else {
     results.put("present", "false");
 }
+
         return renderJSON(results);
     }
+//    Server HPP sink
     public String pingWrapper() {
         Map<String,String> results=new HashMap<>();
         if(StringUtils.isEmpty(getLogin())) {
             results.put("error", "Login not set");
+            return renderJSON(results);
         }
+        String uri="http://localhost:8088/api/ping?login="+getLogin();
+       try{
+           URL url = new URL(uri);
+           HttpURLConnection conn= (HttpURLConnection) url.openConnection();
+           conn.setRequestMethod("GET");
+           conn.setRequestProperty("Accept", "application/json");
+           int responseCode = conn.getResponseCode();
+           System.out.println("GET Response Code :: " + responseCode);
+           if (responseCode == HttpURLConnection.HTTP_OK) { // success
+               BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+               String inputLine;
+               StringBuffer response = new StringBuffer();
+
+               while ((inputLine = in.readLine()) != null) {
+                   response.append(inputLine);
+               }
+               in.close();
+
+               // print result
+//               System.out.println(response.toString());
+               results.put("response", response.toString());
+           } else {
+               System.out.println("GET request did not work.");
+           }
+       } catch (MalformedURLException e) {
+           e.printStackTrace();
+       }catch (IOException e){
+
+       }
     return renderJSON(results);
     }
 }

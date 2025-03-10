@@ -17,7 +17,7 @@
                     <jsp:include page="common/Menu.jsp"></jsp:include>
                 </div>
                 <div class='col-md-9'>
-                    <h3><strong>A10: </strong>Unvalidated Redirects or Forwards</h3>
+                    <h3><strong>WSTG_ATHZ_01: </strong>Directory Traversal</h3>
 
                     <h4>Scenario</h4>
 <%--                    <jsp:include page="WSTG_ATHZ_01/scenario.jsp"></jsp:include>--%>

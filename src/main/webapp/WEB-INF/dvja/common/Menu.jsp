@@ -33,4 +33,7 @@
     <a href="<s:url action="WSTG_ATHZ_01"/>" class="list-group-item">
         <i class="fa fa-angle-double-right"></i> WSTG_ATHZ_01: Directory Traversal
     </a>
+    <a href="<s:url action="WSTG_INPV_04"/>" class="list-group-item">
+        <i class="fa fa-angle-double-right"></i> WSTG_INPV_04: HTTP Parameter Pollution
+    </a>
 </div>

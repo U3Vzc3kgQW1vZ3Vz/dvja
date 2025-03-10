@@ -150,12 +150,31 @@
             <interceptor-ref name="authenticationStack"/>
             <result>/WEB-INF/dvja/a10_redirect.jsp</result>
         </action>
-
+        <action name="WSTG_ATHZ_01">
+            <interceptor-ref name="authenticationStack"/>
+            <result>/WEB-INF/dvja/WSTG_ATHZ_01.jsp</result>
+        </action>
     </package>
 
     <package name="api" namespace="/api" extends="struts-default">
         <action name="ping" class="com.appsecco.dvja.controllers.ApiAction" method="ping"></action>
         <action name="userList" class="com.appsecco.dvja.controllers.ApiAction" method="adminShowUsers"></action>
+    </package>
+    <package name="bespoke" namespace="/bespoke" extends="struts-default">
+        <interceptors>
+            <interceptor name="authenticationInterceptor"
+                         class="com.appsecco.dvja.interceptors.AuthenticationInterceptor"/>
+
+            <interceptor-stack name="authenticationStack">
+                <interceptor-ref name="authenticationInterceptor"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+        <action name="traverse" class="com.appsecco.dvja.controllers.FileTraversalController">
+            <result name="input">/WEB-INF/dvja/PathTraverse.jsp</result>
+            <result>/WEB-INF/dvja/PathTraverse.jsp</result>
+            <interceptor-ref name="authenticationStack"/>
+        </action>
     </package>
 
     <!-- Add addition packages and configuration here. -->

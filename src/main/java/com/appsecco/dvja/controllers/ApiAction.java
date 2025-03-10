@@ -86,4 +86,11 @@ else {
 }
         return renderJSON(results);
     }
+    public String pingWrapper() {
+        Map<String,String> results=new HashMap<>();
+        if(StringUtils.isEmpty(getLogin())) {
+            results.put("error", "Login not set");
+        }
+    return renderJSON(results);
+    }
 }

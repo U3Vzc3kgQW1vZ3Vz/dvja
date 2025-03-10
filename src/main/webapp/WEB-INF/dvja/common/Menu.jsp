@@ -1,5 +1,5 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<div class='list-group'>
+<div class='list-group' style="overflow: scroll;height: 90%;max-height: 500px">
     <a href='<s:url action="a1_injection"/>' class='list-group-item'>
         <i class='fa fa-angle-double-right'></i> A1: Injection
     </a>
@@ -29,5 +29,8 @@
     </a>
     <a href="<s:url action="a10_redirect"/>" class="list-group-item">
         <i class="fa fa-angle-double-right"></i> A10: Unvalidated Redirects and Forwards
+    </a>
+    <a href="<s:url action="WSTG_ATHZ_01"/>" class="list-group-item">
+        <i class="fa fa-angle-double-right"></i> WSTG_ATHZ_01: Directory Traversal
     </a>
 </div>

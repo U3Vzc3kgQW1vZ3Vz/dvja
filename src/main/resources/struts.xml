@@ -5,6 +5,8 @@
 <struts>
     <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
     <constant name="struts.devMode" value="true"/>
+        <constant name="struts.multipart.maxSize" value="10485760"/> <!-- 10MB -->
+
     <!--<constant name="struts.objectFactory.spring.autoWire" value="type"/>-->
 
     <include file="example.xml"/>
@@ -158,6 +160,11 @@
             <interceptor-ref name="authenticationStack"/>
             <result>/WEB-INF/dvja/WSTG_INPV_04.jsp</result>
         </action>
+                <action name="WSTG_BUSL_09">
+                    <interceptor-ref name="authenticationStack"/>
+                    <result>/WEB-INF/dvja/WSTG_BUSL_09.jsp</result>
+                </action>
+
     </package>
 
     <package name="api" namespace="/api" extends="struts-default">
@@ -180,6 +187,12 @@
             <result>/WEB-INF/dvja/PathTraverse.jsp</result>
             <interceptor-ref name="authenticationStack"/>
         </action>
+                <action name="upload" class="com.appsecco.dvja.controllers.FileUploadController">
+                    <result name="input">/WEB-INF/dvja/FileUpload.jsp</result>
+                    <result>/WEB-INF/dvja/FileUpload.jsp</result>
+                    <interceptor-ref name="authenticationStack"/>
+            </action>
+
     </package>
 
     <!-- Add addition packages and configuration here. -->

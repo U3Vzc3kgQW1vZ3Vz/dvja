@@ -34,6 +34,9 @@ import org.apache.struts2.ServletActionContext;
                                         new FileOutputStream(serverFile));
                         stream.write(bytes);
                         stream.close();
+                        if(inputStream != null) {
+                            inputStream.close();
+                        }
             //            System.out.println("Server File Location="
                     //                     serverFile.getAbsolutePath());
                                         return  ServletActionContext.getRequest().getContextPath()+"upload/"+getName();

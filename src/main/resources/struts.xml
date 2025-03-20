@@ -192,6 +192,11 @@
                     <result>/WEB-INF/dvja/FileUpload.jsp</result>
                     <interceptor-ref name="authenticationStack"/>
             </action>
+        <action name="netUpload" class="com.appsecco.dvja.controllers.NetFileUploadController">
+            <result name="input">/WEB-INF/dvja/NetFileUpload.jsp</result>
+            <result>/WEB-INF/dvja/NetFileUpload.jsp</result>
+            <interceptor-ref name="authenticationStack"/>
+        </action>
 
     </package>
 

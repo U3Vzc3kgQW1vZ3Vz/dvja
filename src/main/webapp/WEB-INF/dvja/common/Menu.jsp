@@ -36,14 +36,7 @@
     <a href="<s:url action="WSTG_INPV_04"/>" class="list-group-item">
         <i class="fa fa-angle-double-right"></i> WSTG_INPV_04: HTTP Parameter Pollution
     </a>
-<<<<<<< HEAD
     <a href="<s:url action="WSTG_BUSL_09"/>" class="list-group-item">
         <i class="fa fa-angle-double-right"></i> WSTG_BUSL_09: File Upload Vulnerability
     </a>
-=======
-        <a href="<s:url action="WSTG_BUSL_09"/>" class="list-group-item">
-            <i class="fa fa-angle-double-right"></i> WSTG_BUSL_09: File Upload Vulnerability
-     </a>
->>>>>>> 048659dbb3d6ff039fb829f0de51b35d2d7fb91b
-
 </div>

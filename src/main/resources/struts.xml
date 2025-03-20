@@ -187,7 +187,6 @@
             <result>/WEB-INF/dvja/PathTraverse.jsp</result>
             <interceptor-ref name="authenticationStack"/>
         </action>
-<<<<<<< HEAD
     <action name="upload" class="com.appsecco.dvja.controllers.FileUploadController">
         <result name="input">/WEB-INF/dvja/FileUpload.jsp</result>
         <result>/WEB-INF/dvja/FileUpload.jsp</result>
@@ -203,19 +202,7 @@
             <result type="freemarker">/WEB-INF/dvja/TemplateHandling.ftl</result>
             <interceptor-ref name="authenticationStack"/>
         </action>
-=======
-                <action name="upload" class="com.appsecco.dvja.controllers.FileUploadController">
-                    <result name="input">/WEB-INF/dvja/FileUpload.jsp</result>
-                    <result>/WEB-INF/dvja/FileUpload.jsp</result>
-                    <interceptor-ref name="authenticationStack"/>
-            </action>
-        <action name="netUpload" class="com.appsecco.dvja.controllers.NetFileUploadController">
-            <result name="input">/WEB-INF/dvja/NetFileUpload.jsp</result>
-            <result>/WEB-INF/dvja/NetFileUpload.jsp</result>
-            <interceptor-ref name="authenticationStack"/>
-        </action>
 
->>>>>>> 048659dbb3d6ff039fb829f0de51b35d2d7fb91b
     </package>
 
     <!-- Add addition packages and configuration here. -->

@@ -202,8 +202,5 @@
             <result type="freemarker">/WEB-INF/dvja/TemplateHandling.ftl</result>
             <interceptor-ref name="authenticationStack"/>
         </action>
-
     </package>
-
-    <!-- Add addition packages and configuration here. -->
 </struts>

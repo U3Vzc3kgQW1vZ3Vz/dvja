@@ -22,7 +22,6 @@ public class ApiAction extends BaseController {
     private UserService userService;
     private String login;
     private int role;
-
     public UserService getUserService() {
         return userService;
     }
@@ -112,16 +111,14 @@ else {
             results.put("error", "Login not set");
             return renderJSON(results);
         }
-//        Server HPP sink
-
         String uri="http://localhost:8088/api/ping?login="+getLogin();
        try{
-//           Server HPP sink
            URL url = new URL(uri);
            HttpURLConnection conn= (HttpURLConnection) url.openConnection();
            conn.setRequestMethod("GET");
            conn.setRequestProperty("Accept", "application/json");
            int responseCode = conn.getResponseCode();
+           System.out.println("GET Response Code :: " + responseCode);
            if (responseCode == HttpURLConnection.HTTP_OK) { // success
                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                String inputLine;

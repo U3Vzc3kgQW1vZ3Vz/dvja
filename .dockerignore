@@ -61,8 +61,6 @@ fabric.properties
 modules.xml
 .idea/misc.xml
 *.ipr
-##database info
-db/schema.sql 
 
 # End of https://www.gitignore.io/api/intellij+iml
 

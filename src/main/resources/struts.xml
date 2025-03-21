@@ -158,6 +158,22 @@
             <interceptor-ref name="authenticationStack"/>
             <result>/WEB-INF/dvja/WSTG_INPV_04.jsp</result>
         </action>
+        <action name="WSTG_INPV_11">
+            <interceptor-ref name="authenticationStack"/>
+            <result>/WEB-INF/dvja/WSTG_INPV_11.jsp</result>
+        </action>
+        <action name="WSTG_INPV_18">
+            <interceptor-ref name="authenticationStack"/>
+            <result>/WEB-INF/dvja/WSTG_INPV_18.jsp</result>
+        </action>
+        <action name="WSTG_INPV_19">
+            <interceptor-ref name="authenticationStack"/>
+            <result>/WEB-INF/dvja/WSTG_INPV_19.jsp</result>
+        </action>
+        <action name="WSTG_BUSL_09">
+            <interceptor-ref name="authenticationStack"/>
+            <result>/WEB-INF/dvja/WSTG_BUSL_09.jsp</result>
+        </action>
     </package>
 
     <package name="api" namespace="/api" extends="struts-default">
@@ -180,7 +196,7 @@
         </global-results>
         <action name="login" class="com.appsecco.dvja.controllers.Login">
             <result name="input">/WEB-INF/dvja/Login.jsp</result>
-            <result name="success" type="redirectAction">welcome </result>
+            <result name="success" type="redirectAction">../home</result>
         </action>
         <action name="traverse" class="com.appsecco.dvja.controllers.FileTraversalController">
             <result name="input">/WEB-INF/dvja/PathTraverse.jsp</result>

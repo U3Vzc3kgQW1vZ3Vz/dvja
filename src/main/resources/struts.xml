@@ -175,6 +175,13 @@
                 <interceptor-ref name="defaultStack"/>
             </interceptor-stack>
         </interceptors>
+        <global-results>
+            <result name="login">/WEB-INF/dvja/Login.jsp</result>
+        </global-results>
+        <action name="login" class="com.appsecco.dvja.controllers.Login">
+            <result name="input">/WEB-INF/dvja/Login.jsp</result>
+            <result name="success" type="redirectAction">welcome </result>
+        </action>
         <action name="traverse" class="com.appsecco.dvja.controllers.FileTraversalController">
             <result name="input">/WEB-INF/dvja/PathTraverse.jsp</result>
             <result>/WEB-INF/dvja/PathTraverse.jsp</result>
@@ -191,10 +198,11 @@
         <interceptor-ref name="authenticationStack"/>
     </action>
         <action name="welcome" class="com.appsecco.dvja.controllers.TemplateAction">
-            <result name="input" type="freemarker">/WEB-INF/dvja/TemplateHandling.ftl</result>
-            <result type="freemarker">/WEB-INF/dvja/TemplateHandling.ftl</result>
+            <result name="input" >/WEB-INF/dvja/TemplateHandler.jsp</result>
+            <result >/WEB-INF/dvja/TemplateHandler.jsp</result>
             <interceptor-ref name="authenticationStack"/>
         </action>
+
     </package>
 
     <!-- Add addition packages and configuration here. -->

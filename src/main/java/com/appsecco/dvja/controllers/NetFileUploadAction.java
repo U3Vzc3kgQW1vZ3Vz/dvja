@@ -1,6 +1,5 @@
 package com.appsecco.dvja.controllers;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 
 import java.io.*;
@@ -8,7 +7,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class NetFileUploadController extends BaseController {
+public class NetFileUploadAction extends BaseController {
     private String url;
     public String textOutput;
     public String fetchFile() throws  IOException {

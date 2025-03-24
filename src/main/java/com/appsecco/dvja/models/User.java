@@ -1,41 +1,25 @@
 package com.appsecco.dvja.models;
 
-import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import org.apache.commons.lang.StringUtils;
 
-import javax.persistence.*;
-import java.util.Calendar;
-import java.util.Date;
 
-@Entity
-@Table(name = "users")
+
 public class User {
 
-    @Id
-    @GeneratedValue
     private Integer id;
 
-    @Column(nullable = false)
     private String name;
 
     private String role;
 
-    @Column(nullable = false, unique = true)
     private String login;
 
-    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
     private String password;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="created_at")
-    private Date createdAt;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="updated_at")
-    private Date updatedAt;
+
 
     public Integer getId() {
         return id;
@@ -89,11 +73,4 @@ public class User {
         return StringUtils.equals(getRole(), "admin");
     }
 
-    @PrePersist
-    @PreUpdate
-    private void setTimestamps() {
-        if(id == null)
-            createdAt = new Date();
-        updatedAt = new Date();
-    }
 }

@@ -37,6 +37,9 @@
                 <param name="location">/</param>
             </result>
         </action>
+<!--        <action name="safe" class="com.appsecco.dvja.controllers.SafeModeAction" >-->
+<!--            <result type="none"/>-->
+<!--        </action>-->
 
         <action name="register" class="com.appsecco.dvja.controllers.Register">
             <result name="input">/WEB-INF/dvja/Registration.jsp</result>
@@ -174,6 +177,10 @@
             <interceptor-ref name="authenticationStack"/>
             <result>/WEB-INF/dvja/WSTG_BUSL_09.jsp</result>
         </action>
+        <action name="WSTG_INPV_20">
+            <interceptor-ref name="authenticationStack"/>
+            <result>/WEB-INF/dvja/WSTG_INPV_20.jsp</result>
+        </action>
     </package>
 
     <package name="api" namespace="/api" extends="struts-default">
@@ -198,17 +205,17 @@
             <result name="input">/WEB-INF/dvja/Login.jsp</result>
             <result name="success" type="redirectAction">../home</result>
         </action>
-        <action name="traverse" class="com.appsecco.dvja.controllers.FileTraversalController">
+        <action name="traverse" class="com.appsecco.dvja.controllers.FileTraversalAction">
             <result name="input">/WEB-INF/dvja/PathTraverse.jsp</result>
             <result>/WEB-INF/dvja/PathTraverse.jsp</result>
             <interceptor-ref name="authenticationStack"/>
         </action>
-    <action name="upload" class="com.appsecco.dvja.controllers.FileUploadController">
+    <action name="upload" class="com.appsecco.dvja.controllers.FileUploadAction">
         <result name="input">/WEB-INF/dvja/FileUpload.jsp</result>
         <result>/WEB-INF/dvja/FileUpload.jsp</result>
         <interceptor-ref name="authenticationStack"/>
     </action>
-    <action name="netUpload" class="com.appsecco.dvja.controllers.NetFileUploadController">
+    <action name="netUpload" class="com.appsecco.dvja.controllers.NetFileUploadAction">
         <result name="input">/WEB-INF/dvja/NetFileUpload.jsp</result>
         <result>/WEB-INF/dvja/NetFileUpload.jsp</result>
         <interceptor-ref name="authenticationStack"/>
@@ -216,6 +223,11 @@
         <action name="welcome" class="com.appsecco.dvja.controllers.TemplateAction">
             <result name="input" >/WEB-INF/dvja/TemplateHandler.jsp</result>
             <result >/WEB-INF/dvja/TemplateHandler.jsp</result>
+            <interceptor-ref name="authenticationStack"/>
+        </action>
+        <action name="serialize" class="com.appsecco.dvja.controllers.SerializableAction">
+            <result name="input" >/WEB-INF/dvja/Cookie.jsp</result>
+            <result >/WEB-INF/dvja/Cookie.jsp</result>
             <interceptor-ref name="authenticationStack"/>
         </action>
 

@@ -1,6 +1,7 @@
 package com.appsecco.dvja.controllers;
 
 import com.appsecco.dvja.models.User;
+import com.appsecco.dvja.services.SafeModeService;
 import com.appsecco.dvja.services.UserService;
 import org.apache.commons.lang.StringUtils;
 
@@ -106,7 +107,11 @@ public class UserAction extends BaseController {
             return INPUT;
 
         try {
-            user = userService.findByLoginUnsafe(getLogin());
+            if(SafeModeService.isSafe()){
+                user = userService.findByLogin(getLogin());
+            } else {
+                user = userService.findByLoginUnsafe(getLogin());
+            }
             if(user == null) {
                 addFieldError("login", "User not found by login: " + getLogin());
                 return INPUT;

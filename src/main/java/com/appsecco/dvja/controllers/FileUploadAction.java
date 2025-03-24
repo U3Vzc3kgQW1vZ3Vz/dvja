@@ -1,11 +1,10 @@
 package com.appsecco.dvja.controllers;
         
-        import org.apache.commons.lang.StringUtils;
-import org.apache.struts2.ServletActionContext;
+        import org.apache.struts2.ServletActionContext;
 
         import java.io.*;
 
-        public class FileUploadController extends BaseController {
+        public class FileUploadAction extends BaseController {
     private String filename;
     private File file;
     private String contentType;

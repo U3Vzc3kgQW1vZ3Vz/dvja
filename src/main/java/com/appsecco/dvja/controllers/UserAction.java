@@ -72,11 +72,21 @@ public class UserAction extends BaseController {
     }
 
     public String edit() {
-//        if(sessionGetUser() != null) {
-//            setUser(sessionGetUser());
-//            setUserId(getUser().getId());
-//            setEmail(getUser().getEmail());
-//        }
+ if(SafeModeService.isSafe()){
+     if (getUserId()==0){
+addFieldError("userId","You must select a user");
+return INPUT;
+     }
+     if(getUserId() != sessionGetUser().getId()){
+         addFieldError("userId", "You are not logged as the user");
+         return INPUT;
+     }
+     if(sessionGetUser() != null) {
+         setUser(sessionGetUser());
+         setUserId(getUser().getId());
+         setEmail(getUser().getEmail());
+     }
+ }
 
         if(StringUtils.isEmpty(getPassword()) || StringUtils.isEmpty(getPasswordConfirmation()))
             return INPUT;

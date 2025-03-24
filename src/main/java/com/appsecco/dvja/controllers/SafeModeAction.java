@@ -24,6 +24,7 @@ public class SafeModeAction extends BaseController{
             PrintWriter out =  ServletActionContext.getResponse().getWriter();
             out.print(storedSafeValue);
             out.flush();
+            out.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -56,10 +56,6 @@
        input:checked + .slider:before {
            transform: translateX(25px);
        }
-       .navbar-nav {
-           display: flex;
-           align-items: center;
-       }
    </style>
 </head>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -96,19 +92,34 @@
             </li>
         </s:if>
           <li>
-              <form id="toggleForm" action="safe" method="post">
+
+              <a>
+                  <i class="fa fa-lock"></i> Safe Mode
+              </a>
+          </li>
+          <li>
+              <a>
                   <label class="switch">
                       <input type="checkbox" name="safemode" id="toggleSwitch">
                       <span class="slider"></span>
                   </label>
-                  <input type="hidden" name="toggleValueHidden" id="toggleValueHidden" value="false">
-              </form>
+              </a>
           </li>
       </ul>
     </div><!--/.navbar-collapse -->
   </div>
 </nav>
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Fetch the persisted safe state when the page loads
+        fetch('getSafeState')
+            .then(response => response.text()) // Expect plain text
+            .then(data => {
+                let toggleSwitch = document.getElementById('toggleSwitch');
+                toggleSwitch.checked = (data.trim() === "true"); // Convert plain text to boolean
+            })
+            .catch(error => console.error("Error fetching safe state:", error));
+    });
     document.getElementById('toggleSwitch').addEventListener('change', function () {
         let toggleValue = this.checked ? "true" : "false";
 
@@ -122,5 +133,4 @@
             .then(response => console.log("Toggle updated"))
             .catch(error => console.error("Error:", error));
     });
-
 </script>

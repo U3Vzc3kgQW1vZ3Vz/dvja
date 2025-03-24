@@ -41,6 +41,10 @@
             <result type="plainText"/>
         </action>
 
+        <action name="getSafeState" class="com.appsecco.dvja.controllers.SafeModeAction" method="getSafeState">
+                <result type="plainText"></result>
+        </action>
+
         <action name="register" class="com.appsecco.dvja.controllers.Register">
             <result name="input">/WEB-INF/dvja/Registration.jsp</result>
             <result name="success">/WEB-INF/dvja/RegistrationSuccess.jsp</result>

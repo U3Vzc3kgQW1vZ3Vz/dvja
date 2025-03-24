@@ -96,13 +96,13 @@
             </li>
         </s:if>
           <li>
-              <s:form id="toggleForm" action="safe" method="post">
+              <form id="toggleForm" action="safe" method="post">
                   <label class="switch">
-                      <input type="checkbox" name="safe" id="toggleSwitch">
+                      <input type="checkbox" name="safemode" id="toggleSwitch">
                       <span class="slider"></span>
                   </label>
                   <input type="hidden" name="toggleValueHidden" id="toggleValueHidden" value="false">
-              </s:form>
+              </form>
           </li>
       </ul>
     </div><!--/.navbar-collapse -->
@@ -110,10 +110,17 @@
 </nav>
 <script>
     document.getElementById('toggleSwitch').addEventListener('change', function () {
-        let hiddenInput = document.getElementById('toggleValueHidden');
-        hiddenInput.value = this.checked ? "true" : "false";
+        let toggleValue = this.checked ? "true" : "false";
 
-        // Submit the form when toggled
-        document.getElementById('toggleForm').submit();
+        fetch('safe', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'safe=' + toggleValue
+        })
+            .then(response => console.log("Toggle updated"))
+            .catch(error => console.error("Error:", error));
     });
+
 </script>

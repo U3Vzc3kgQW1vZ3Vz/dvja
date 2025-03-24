@@ -7,7 +7,7 @@ public class SafeModeAction extends BaseController{
     public String execute() {
             SafeModeService.setSafe(isSafe());
         System.out.println(isSafe());
-        return NONE;
+        return SUCCESS;
     }
     public boolean isSafe() {
         return safe;

@@ -37,9 +37,9 @@
                 <param name="location">/</param>
             </result>
         </action>
-<!--        <action name="safe" class="com.appsecco.dvja.controllers.SafeModeAction" >-->
-<!--            <result type="none"/>-->
-<!--        </action>-->
+        <action name="safe" class="com.appsecco.dvja.controllers.SafeModeAction" >
+            <result type="plainText"/>
+        </action>
 
         <action name="register" class="com.appsecco.dvja.controllers.Register">
             <result name="input">/WEB-INF/dvja/Registration.jsp</result>

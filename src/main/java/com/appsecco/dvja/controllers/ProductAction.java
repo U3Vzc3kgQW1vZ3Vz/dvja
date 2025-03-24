@@ -2,6 +2,7 @@ package com.appsecco.dvja.controllers;
 
 import com.appsecco.dvja.models.Product;
 import com.appsecco.dvja.services.ProductService;
+import com.appsecco.dvja.services.SafeModeService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
@@ -14,6 +15,7 @@ public class ProductAction extends BaseController {
     private Product product;
     private List<Product> products;
     private ProductService productService;
+    private boolean safe;
 
     public String getSearchQuery() {
         return searchQuery;
@@ -90,5 +92,8 @@ public class ProductAction extends BaseController {
             addActionError("Error Occurred: " + e.getMessage());
             return INPUT;
         }
+    }
+    public boolean isSafe() {
+        return SafeModeService.isSafe();
     }
 }

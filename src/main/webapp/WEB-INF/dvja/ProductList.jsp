@@ -21,7 +21,13 @@
         <s:if test="searchQuery != null">
             <p class="bg-success">
 <%--                Reflected XSS--%>
-                Listing products with <strong>search query: </strong> <%= request.getParameter("searchQuery") %>
+<%--                Fixes here prevents Stored XSS but it will not work on its own when user input is put in an eval or <script> tag or when user input is put into the DOM tree and so on--%>
+                Listing products with <strong>search query: <s:if test="!safe">
+</strong> <%= request.getParameter("searchQuery") %>
+    </s:if>
+    <s:else><%String query= request.getParameter("searchQuery"); %>
+        </strong><c:out value="${query}"></c:out>
+    </s:else>
                 &nbsp; &nbsp;
                 <small><a href="<s:url action="listProduct"/>">
                     <i class="fa fa-remove"></i> Clear
@@ -41,7 +47,12 @@
             <tr>
                 <td><s:property value="id"/></td>
 <%--                Stored XSS sink--%>
-                <td><s:property value="name" escape="false"/></td>
+                <s:if test="safe">
+                    <td><s:property value="name"/></td>
+                </s:if>
+<s:else>
+    <td><s:property value="name" escape="false"/></td>
+</s:else>
                 <td><s:property value="code"/></td>
                 <td><s:property value="tags"/></td>
                 <td>
@@ -63,7 +74,7 @@
                             <s:textfield
                                     label="Query"
                                     name="searchQuery"
-                                    placeholder="Search by name"/>
+                                    placeholder="Search by product code"/>
                             <s:submit cssClass="btn btn-primary"/>
                         </s:form>
                     </div>

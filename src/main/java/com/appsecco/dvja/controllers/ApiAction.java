@@ -95,6 +95,12 @@ if(SafeModeService.isSafe()){
             results.put("error", "Login not set");
             return renderJSON(results);
         }
+        if(SafeModeService.isSafe()){
+            if(sessionGetUser()==null) {
+                results.put("error", "Not authenticated, please login first");
+                return renderJSON(results);
+            }
+        }
         if(role == 0) {
             results.put("role:", "no role");
         }
@@ -122,6 +128,12 @@ else {
             results.put("error", "Login not set");
             return renderJSON(results);
         }
+if(SafeModeService.isSafe()){
+    if(sessionGetUser()==null) {
+        results.put("error", "Not authenticated, please login first");
+        return renderJSON(results);
+    }
+}
         String uri="http://localhost:8088/api/ping?login="+getLogin();
        try{
            URL url = new URL(uri);

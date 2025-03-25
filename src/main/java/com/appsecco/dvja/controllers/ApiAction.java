@@ -2,6 +2,7 @@ package com.appsecco.dvja.controllers;
 
 
 import com.appsecco.dvja.models.User;
+import com.appsecco.dvja.services.SafeModeService;
 import com.appsecco.dvja.services.UserService;
 import org.apache.commons.lang.StringUtils;
 
@@ -48,13 +49,19 @@ public class ApiAction extends BaseController {
         Map results = new HashMap();
         boolean isAdmin = false;
 
-        for(Cookie c: getServletRequest().getCookies()) {
+if(SafeModeService.isSafe()){
+    if(sessionGetUser().getName().equals("admin")){
+        isAdmin = true;
+    }
+}else {
+    for(Cookie c: getServletRequest().getCookies()) {
 //            IDOR sink
-            if(c.getName().equals("admin") && c.getValue().equals("1")) {
-                isAdmin = true;
-                break;
-            }
+        if(c.getName().equals("admin") && c.getValue().equals("1")) {
+            isAdmin = true;
+            break;
         }
+    }
+}
 
         if(isAdmin) {
             List<Map<String, String>> userList = new ArrayList<Map<String,String>>();
@@ -72,6 +79,10 @@ public class ApiAction extends BaseController {
 
             results.put("count", userList.size());
             results.put("users", userList);
+        }
+        else {
+            results.put("count", 0);
+            results.put("error", "Not authorized");
         }
 
         return renderJSON(results);

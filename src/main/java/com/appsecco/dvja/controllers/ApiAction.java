@@ -13,10 +13,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.URLDecoder;
+import java.util.*;
 
 public class ApiAction extends BaseController {
 
@@ -137,6 +135,23 @@ if(SafeModeService.isSafe()){
         String uri="http://localhost:8088/api/ping?login="+getLogin();
        try{
            URL url = new URL(uri);
+           if(SafeModeService.isSafe()){
+               Map<String, String> query_pairs = new LinkedHashMap<String, String>();
+               String query=url.getQuery();
+               String[] pairs = query.split("&");
+               for (String pair : pairs) {
+                   int idx = pair.indexOf("=");
+                   if(!URLDecoder.decode(pair.substring(0, idx), "UTF-8").equals("login")) {
+                       results.put("error", "Invalid query "+pair);
+                       return renderJSON(results);
+                   }
+                   if(!URLDecoder.decode(pair.substring(idx + 1), "UTF-8").equals(sessionGetUser().getName().toLowerCase())) {
+                       results.put("error", "login query does not match session user");
+                       return renderJSON(results);
+                   }
+               }
+               return ping();
+           }
            HttpURLConnection conn= (HttpURLConnection) url.openConnection();
            conn.setRequestMethod("GET");
            conn.setRequestProperty("Accept", "application/json");

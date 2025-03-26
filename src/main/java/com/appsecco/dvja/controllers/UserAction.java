@@ -146,10 +146,12 @@ public class UserAction extends BaseController {
                 addFieldError("login", "User not found by login: " + getLogin());
                 return INPUT;
             }
+
         } catch (Exception e) {
-            addActionError("Error Occurred: " + e.getMessage());
+            addFieldError("login " ,e.getMessage());
             return INPUT;
         }
+
 
         return SUCCESS;
     }

@@ -47,7 +47,8 @@ public class UserService {
                 System.out.println(pstmt.toString());
 
             } catch (SQLException e) {
-                System.out.println(pstmt.toString());
+//                System.out.println(pstmt.toString());
+
             } finally {
                 DbConnectionService.close(pstmt, rs);
             }
@@ -150,7 +151,7 @@ public class UserService {
                     resultList.add(user);
                 }
             } catch (SQLException e) {
-                System.out.println(pstmt.toString());
+
             } finally {
                 DbConnectionService.close(pstmt, rs);
             }
@@ -185,6 +186,7 @@ public class UserService {
                 }
             } catch (SQLException e) {
                 System.out.println(pstmt.toString());
+                throw new RuntimeException(e.getMessage());
 
             } finally {
                 DbConnectionService.close(pstmt, rs);

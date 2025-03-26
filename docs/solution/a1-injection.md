@@ -17,6 +17,14 @@ The root cause of this vulnerability lies in unsafe use of SQL query in _UserSer
 ```java
 Query query = entityManager.createQuery("SELECT u FROM User u WHERE u.login = '" + login + "'");
 List<User> resultList = query.getResultList();
+       ResultSet rs = null;
+        PreparedStatement pstmt = null;
+        String queryString = "SELECT * FROM users where login = ?";
+        if (DbConnectionService.open()) {
+            try {
+                pstmt = (PreparedStatement) DbConnectionService.cnn.prepareStatement(queryString);
+                pstmt.setString(1, login);
+                rs = pstmt.executeQuery();
 ```
 
 ### Solution
@@ -50,12 +58,9 @@ Process process = runtime.exec(command);
 
 ### Solution
 
-Use _ProcessBuilder _to prepare and execute external shell commands securely. Example:
+Use _ProcessBuilder_to prepare and execute external shell commands securely. Example:
 
 ```java
 ProcessBuilder pb = new ProcessBuilder("myCommand", "myArg1", "myArg2");
 Process p = pb.start();
 ```
-
-
-

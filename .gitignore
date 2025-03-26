@@ -62,5 +62,6 @@ modules.xml
 .idea/misc.xml
 *.ipr
 src/main/webapp/WEB-INF/config.properties
+src/main/webapp/upload/*
 # End of https://www.gitignore.io/api/intellij+iml
 

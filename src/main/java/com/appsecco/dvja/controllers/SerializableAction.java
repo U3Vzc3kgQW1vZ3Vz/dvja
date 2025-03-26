@@ -1,5 +1,7 @@
 package com.appsecco.dvja.controllers;
 
+import com.appsecco.dvja.models.WhitelistedObjectInputStream;
+import com.appsecco.dvja.services.SafeModeService;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.ByteArrayInputStream;
@@ -17,18 +19,24 @@ try{
     byte[] decoded = Base64.getDecoder().decode(getSerialString());
 
     ByteArrayInputStream bytes = new ByteArrayInputStream(decoded);
-    ObjectInputStream in = new ObjectInputStream(bytes);
+    ObjectInputStream in = null;
+    if(SafeModeService.isSafe()){
+        in=new WhitelistedObjectInputStream(bytes);
+
+    }else {
+        in=new ObjectInputStream(bytes);
+    }
     setOutput(new String(decoded, StandardCharsets.UTF_8));
     Object obj=in.readObject();
     in.close();
 }
 catch(IOException e){
 //    e.printStackTrace();
-addActionError("IO Exception");
+addFieldError("serialString", e.getMessage());
 }
 catch(ClassNotFoundException e){
 //    e.printStackTrace();
-    addActionError("Object not found");
+    addFieldError("serialString", e.getMessage());
 }
 }
 public String execute() throws Exception {

@@ -61,6 +61,6 @@ fabric.properties
 modules.xml
 .idea/misc.xml
 *.ipr
-
+src/main/webapp/WEB-INF/config.properties
 # End of https://www.gitignore.io/api/intellij+iml
 

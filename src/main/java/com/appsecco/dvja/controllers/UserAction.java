@@ -92,7 +92,7 @@ public class UserAction extends BaseController {
 
             // CSRF Validation: Check if the request token matches the session token
 
-            if (getUserId() != sessionGetUser().getId() && getUserId() >0) {
+            if (getUserId() != sessionGetUser().getId() && getUserId() > 0) {
                 addFieldError("userId", "You are not logged as the user");
                 return INPUT;
             }
@@ -100,8 +100,7 @@ public class UserAction extends BaseController {
                 setUser(sessionGetUser());
                 setUserId(getUser().getId());
                 setEmail(getUser().getEmail());
-            }
-            else return INPUT;
+            } else return INPUT;
             if (sessionToken == null || requestToken == null || !sessionToken.equals(requestToken)) {
                 addActionError("Invalid CSRF Token. Possible CSRF attack detected!");
                 return INPUT; // Redirect to an error page
@@ -113,9 +112,9 @@ public class UserAction extends BaseController {
             return INPUT;
         }
 //IDOR Sink
-        if(getUserId()<=0) {
+        if (getUserId() <= 0) {
             user = userService.find(sessionGetUser().getId());
-        }else {
+        } else {
             user = userService.find(getUserId());
         }
         if (user == null) {

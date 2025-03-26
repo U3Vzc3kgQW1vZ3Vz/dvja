@@ -35,10 +35,10 @@ public class FileTraversalAction extends BaseController {
         String fullPath = URLDecoder.decode(path, "UTF-8");
         String pathArr[] = fullPath.split("/classes/");
         fullPath = pathArr[0];
-        File file = new File(fullPath+BASE_PATH + getPath());
+        File file = new File(fullPath + BASE_PATH + getPath());
         if (file.exists()) {
-            if(SafeModeService.isSafe()){
-                if(!file.getParent().equals(new File(fullPath+BASE_PATH).getAbsolutePath())){
+            if (SafeModeService.isSafe()) {
+                if (!file.getParent().equals(new File(fullPath + BASE_PATH).getAbsolutePath())) {
                     throw new IOException(", not a file in allowed path");
                 }
             }
@@ -56,7 +56,7 @@ public class FileTraversalAction extends BaseController {
         try {
             getFile();
         } catch (IOException e) {
-            addFieldError("path", "Invalid path or file"+e.getMessage());
+            addFieldError("path", "Invalid path or file" + e.getMessage());
         }
         return SUCCESS;
     }

@@ -8,28 +8,32 @@
 </head>
 <body>
 <jsp:include page="common/Navigation.jsp"></jsp:include>
-<div class='container' style='min-height: 450px'><div class='row'><div class='col-md-12'>
-
+<div class='container' style='min-height: 450px'>
     <div class='row'>
-        <div class='col-md-3'>
-            <jsp:include page="common/Menu.jsp"></jsp:include>
-        </div>
-        <div class='col-md-9'>
-            <h3><strong>A6: </strong>Sensitive Data Exposure</h3>
+        <div class='col-md-12'>
 
-            <h4>Scenario</h4>
-            <jsp:include page="a6_sensitive_data/scenario.jsp"></jsp:include>
+            <div class='row'>
+                <div class='col-md-3'>
+                    <jsp:include page="common/Menu.jsp"></jsp:include>
+                </div>
+                <div class='col-md-9'>
+                    <h3><strong>A6: </strong>Sensitive Data Exposure</h3>
 
-            <h4>Overview</h4>
-            <jsp:include page="a6_sensitive_data/description.jsp"></jsp:include>
+                    <h4>Scenario</h4>
+                    <jsp:include page="a6_sensitive_data/scenario.jsp"></jsp:include>
 
-            <h4>Reference</h4>
-            <jsp:include page="a6_sensitive_data/reference.jsp"></jsp:include>
+                    <h4>Overview</h4>
+                    <jsp:include page="a6_sensitive_data/description.jsp"></jsp:include>
+
+                    <h4>Reference</h4>
+                    <jsp:include page="a6_sensitive_data/reference.jsp"></jsp:include>
+                </div>
+            </div>
+
+
         </div>
     </div>
-
-
-</div></div></div>
+</div>
 <jsp:include page="common/Footer.jsp"></jsp:include>
 </body>
 </html>

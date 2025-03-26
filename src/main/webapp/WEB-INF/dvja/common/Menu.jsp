@@ -43,7 +43,7 @@
         <i class="fa fa-angle-double-right"></i> WSTG_INPV_11: Code Injection
     </a>
     <a href="<s:url action="WSTG_INPV_18"/>" class="list-group-item">
-        <i class="fa fa-angle-double-right"></i> WSTG_INPV_18:  Server Side Template injection
+        <i class="fa fa-angle-double-right"></i> WSTG_INPV_18: Server Side Template injection
     </a>
     <a href="<s:url action="WSTG_INPV_19"/>" class="list-group-item">
         <i class="fa fa-angle-double-right"></i> WSTG_INPV_19: Server Side Request Forgery

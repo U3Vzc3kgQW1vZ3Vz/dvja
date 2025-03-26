@@ -31,7 +31,7 @@ public class PingAction extends BaseController {
     }
 
     public String execute() {
-        if(StringUtils.isEmpty(getAddress()))
+        if (StringUtils.isEmpty(getAddress()))
             return INPUT;
 
         try {
@@ -46,8 +46,8 @@ public class PingAction extends BaseController {
     private void doExecCommand() throws IOException {
         Runtime runtime = Runtime.getRuntime();
 //        Command injection sink
-        if(SafeModeService.isSafe()){
-            try{
+        if (SafeModeService.isSafe()) {
+            try {
                 InetAddress ipAddress = InetAddress.getByName(getAddress());
                 setAddress(ipAddress.getHostAddress());
             } catch (UnknownHostException e) {
@@ -55,21 +55,21 @@ public class PingAction extends BaseController {
                 return;
             }
         }
-        String[] command = { "/bin/bash", "-c", "ping -c 5 " + getAddress() };
+        String[] command = {"/bin/bash", "-c", "ping -c 5 " + getAddress()};
         Process process = runtime.exec(command);
 
-        BufferedReader  stdinputReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        BufferedReader stdinputReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String line = null;
         String output = "Output:\n\n";
 
-        while((line = stdinputReader.readLine()) != null)
+        while ((line = stdinputReader.readLine()) != null)
             output += line + "\n";
 
         output += "\n";
         output += "Error:\n\n";
 
         stdinputReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-        while((line = stdinputReader.readLine()) != null)
+        while ((line = stdinputReader.readLine()) != null)
             output += line + "\n";
 
         setCommandOutput(output);

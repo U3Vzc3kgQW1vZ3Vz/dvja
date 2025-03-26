@@ -1,66 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app id="struts_blank" version="2.4"
-         xmlns="http://java.sun.com/xml/ns/j2ee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="struts_blank"
+         version="2.4"
+         xmlns="http://java.sun.com/xml/ns/j2ee"
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-  <display-name>Damn Vulnerable Java Application</display-name>
+    <display-name>Damn Vulnerable Java Application</display-name>
 
-  <filter>
-    <filter-name>Spring OpenEntityManagerInViewFilter</filter-name>
-    <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
-  </filter>
+    <filter>
+        <filter-name>Spring OpenEntityManagerInViewFilter</filter-name>
+        <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+    </filter>
 
-  <filter>
-    <filter-name>struts2</filter-name>
-    <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
-  </filter>
+    <filter>
+        <filter-name>struts2</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+    </filter>
 
-  <filter-mapping>
-    <filter-name>Spring OpenEntityManagerInViewFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
+    <filter-mapping>
+        <filter-name>Spring OpenEntityManagerInViewFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
-  <filter-mapping>
-    <filter-name>struts2</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
+    <filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-  </welcome-file-list>
-  <!-- Define Velocity template compiler -->
-<!--  <servlet>-->
-<!--    <servlet-name>velocity</servlet-name>-->
-<!--    <servlet-class>-->
-<!--      org.apache.velocity.tools.view.servlet.VelocityViewServlet-->
-<!--    </servlet-class>-->
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+    <!-- Define Velocity template compiler -->
+    <!--  <servlet>-->
+    <!--    <servlet-name>velocity</servlet-name>-->
+    <!--    <servlet-class>-->
+    <!--      org.apache.velocity.tools.view.servlet.VelocityViewServlet-->
+    <!--    </servlet-class>-->
 
-<!--    &lt;!&ndash;-->
-<!--      Unless you plan to put your toolbox.xml and velocity.properties-->
-<!--      under different folders or give them different names, then these-->
-<!--      two init-params are unnecessary as of VelocityTools 1.3.  The-->
-<!--      VelocityViewServlet will automatically look for these files in-->
-<!--      the following locations.-->
-<!--    &ndash;&gt;-->
-<!--    <init-param>-->
-<!--      <param-name>org.apache.velocity.toolbox</param-name>-->
-<!--      <param-value>/WEB-INF/toolbox.xml</param-value>-->
-<!--    </init-param>-->
+    <!--    &lt;!&ndash;-->
+    <!--      Unless you plan to put your toolbox.xml and velocity.properties-->
+    <!--      under different folders or give them different names, then these-->
+    <!--      two init-params are unnecessary as of VelocityTools 1.3.  The-->
+    <!--      VelocityViewServlet will automatically look for these files in-->
+    <!--      the following locations.-->
+    <!--    &ndash;&gt;-->
+    <!--    <init-param>-->
+    <!--      <param-name>org.apache.velocity.toolbox</param-name>-->
+    <!--      <param-value>/WEB-INF/toolbox.xml</param-value>-->
+    <!--    </init-param>-->
 
-<!--    <init-param>-->
-<!--      <param-name>org.apache.velocity.properties</param-name>-->
-<!--      <param-value>/WEB-INF/velocity.properties</param-value>-->
-<!--    </init-param>-->
-<!--  </servlet>-->
+    <!--    <init-param>-->
+    <!--      <param-name>org.apache.velocity.properties</param-name>-->
+    <!--      <param-value>/WEB-INF/velocity.properties</param-value>-->
+    <!--    </init-param>-->
+    <!--  </servlet>-->
 
-<!--  &lt;!&ndash; Map *.vm files to Velocity &ndash;&gt;-->
-<!--  <servlet-mapping>-->
-<!--    <servlet-name>velocity</servlet-name>-->
-<!--    <url-pattern>*.vm</url-pattern>-->
-<!--  </servlet-mapping>-->
+    <!--  &lt;!&ndash; Map *.vm files to Velocity &ndash;&gt;-->
+    <!--  <servlet-mapping>-->
+    <!--    <servlet-name>velocity</servlet-name>-->
+    <!--    <url-pattern>*.vm</url-pattern>-->
+    <!--  </servlet-mapping>-->
 
-  <listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
 </web-app>

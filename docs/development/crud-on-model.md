@@ -1,6 +1,9 @@
 # CRUD on Model
 
-The application is developed following MVC pattern where data and business logic is handled at the model. For each entity that requires storage in DB, we define a _Model_ class which act as an _Entity_ that can be stored in the database. Additionally we define a _Service_ class which implements the actual storage and retreival operation for the entity.
+The application is developed following MVC pattern where data and business logic is handled at the model. For each
+entity that requires storage in DB, we define a _Model_ class which act as an _Entity_ that can be stored in the
+database. Additionally we define a _Service_ class which implements the actual storage and retreival operation for the
+entity.
 
 ## Implementing CRUD on User
 
@@ -13,7 +16,8 @@ To implement a CRUD operation on an entity, such as _User_, follow steps should 
 
 ### POJO
 
-The POJO representing an User object should be annotated correctly using JPA annotations so that the storage framework can map entity to appropriate record in the database:
+The POJO representing an User object should be annotated correctly using JPA annotations so that the storage framework
+can map entity to appropriate record in the database:
 
 ```java
 package com.appsecco.dvja.models;

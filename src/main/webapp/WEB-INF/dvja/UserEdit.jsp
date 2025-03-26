@@ -8,43 +8,47 @@
 </head>
 <body>
 <jsp:include page="common/Navigation.jsp"></jsp:include>
-<div class='container' style='min-height: 450px'><div class='row'><div class='col-md-12'>
-
+<div class='container' style='min-height: 450px'>
     <div class='row'>
-        <div class='col-md-6 col-md-offset-3'>
-            <h2>Edit User (#<s:property value="user.id"/>)</h2>
+        <div class='col-md-12'>
 
-            <s:actionerror theme="bootstrap"/>
-            <s:actionmessage theme="bootstrap"/>
-            <s:fielderror theme="bootstrap"/>
+            <div class='row'>
+                <div class='col-md-6 col-md-offset-3'>
+                    <h2>Edit User (#<s:property value="user.id"/>)</h2>
 
-            <s:form action="editUser" method="post" theme="bootstrap">
-<%--                IDOR sink--%>
-                <s:if test="%{safeMode}">
-                    <h3>
-                        SafeMode is on
-                    </h3>
-                    <s:token name="token"></s:token>
-                </s:if>
-                <s:hidden name="userId" />
-                <s:textfield
-                    label="Email"
-                    name="email"
-                    placeholder="Enter your email"/>
-                <s:password
-                        label="Password"
-                        name="password"
-                        placeholder="Enter password"/>
-                <s:password
-                        label="Password Confirmation"
-                        name="passwordConfirmation"
-                        placeholder="Enter password confirmation"/>
-                <s:submit cssClass="btn btn-primary"/>
-            </s:form>
+                    <s:actionerror theme="bootstrap"/>
+                    <s:actionmessage theme="bootstrap"/>
+                    <s:fielderror theme="bootstrap"/>
+
+                    <s:form action="editUser" method="post" theme="bootstrap">
+                        <%--                IDOR sink--%>
+                        <s:if test="%{safeMode}">
+                            <h3>
+                                SafeMode is on
+                            </h3>
+                            <s:token name="token"></s:token>
+                        </s:if>
+                        <s:hidden name="userId"/>
+                        <s:textfield
+                                label="Email"
+                                name="email"
+                                placeholder="Enter your email"/>
+                        <s:password
+                                label="Password"
+                                name="password"
+                                placeholder="Enter password"/>
+                        <s:password
+                                label="Password Confirmation"
+                                name="passwordConfirmation"
+                                placeholder="Enter password confirmation"/>
+                        <s:submit cssClass="btn btn-primary"/>
+                    </s:form>
+                </div>
+            </div>
+
         </div>
     </div>
-
-</div></div></div>
+</div>
 <jsp:include page="common/Footer.jsp"></jsp:include>
 </body>
 </html>

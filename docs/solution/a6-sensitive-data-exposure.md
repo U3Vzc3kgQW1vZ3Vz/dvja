@@ -18,7 +18,8 @@ public boolean resetPasswordByLogin(String login, String key,
 }
 ```
 
-This is a security issue since confidential information such as user password is recorded in an insecure medium such as application log.
+This is a security issue since confidential information such as user password is recorded in an insecure medium such as
+application log.
 
 ### Solution
 

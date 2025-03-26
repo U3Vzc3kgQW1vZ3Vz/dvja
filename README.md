@@ -1,6 +1,5 @@
 # Damn Vulnerable Java Application
 
-
 ## Requirements
 
 * Java 1.7+
@@ -39,7 +38,11 @@ The deployable `war` file is generated in targets directory.
 $ mvn jetty:run
 ```
 
-This will start the `Jetty` server on port 8080.
+This will start the `Jetty` server on port 8080. If your jetty server can't login then perhaps your server can't connect to the mysql server. To fix this you need to move config.properties to the target folder.
+```bash
+mv dvja
+cp src/main/webapp/WEB-INF/config.properties target/ 
+```
 
 ## Deploy in Tomcat Server
 

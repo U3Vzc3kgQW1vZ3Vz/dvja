@@ -21,7 +21,9 @@ List<User> resultList = query.getResultList();
 
 ### Solution
 
-Clear separation between SQL code and data must be maintained in order to prevent SQL Injection vulnerabilities. Implement parameterized queries to allow the SQL client library to maintain separation between code and data. An appropriate implementation is as below:
+Clear separation between SQL code and data must be maintained in order to prevent SQL Injection vulnerabilities.
+Implement parameterized queries to allow the SQL client library to maintain separation between code and data. An
+appropriate implementation is as below:
 
 ```java
 Query query = entityManager.createQuery("SELECT u FROM User u WHERE u.login = :login").

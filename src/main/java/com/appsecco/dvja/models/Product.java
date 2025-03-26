@@ -1,8 +1,6 @@
 package com.appsecco.dvja.models;
 
 
-
-
 public class Product {
 
     private Integer id;

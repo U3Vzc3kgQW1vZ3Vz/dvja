@@ -1,6 +1,8 @@
 # Damn Vulnerable Java Application
 
-The objective of this project is to develop an intentionally web application using Java as a technology and popular libraries for Java web application development such as Struts2, Spring, Hibernate etc. This web application will be primarily used for the following purpose:
+The objective of this project is to develop an intentionally web application using Java as a technology and popular
+libraries for Java web application development such as Struts2, Spring, Hibernate etc. This web application will be
+primarily used for the following purpose:
 
 * An example to demonstrate OWASP Top 10 vulnerabilities
 * Hands-on exercise on fixing OWASP Top 10 vulnerabilities
@@ -41,7 +43,8 @@ mysql -u root dvja < ./db/schema.sql
 $ mvn clean package
 ```
 
-This will create the deployable _war_ file in _targets_ directory. This war can be deployed using a application container such as Tomcat.
+This will create the deployable _war_ file in _targets_ directory. This war can be deployed using a application
+container such as Tomcat.
 
 ### Run in Embedded Jetty
 

@@ -26,20 +26,19 @@ package com.appsecco.example;
  */
 public class HelloWorld extends ExampleSupport {
 
-    public String execute() throws Exception {
-        setMessage(getText(MESSAGE));
-        return SUCCESS;
-    }
-
     /**
      * Provide default valuie for Message property.
      */
     public static final String MESSAGE = "HelloWorld.message";
-
     /**
      * Field for Message property.
      */
     private String message;
+
+    public String execute() throws Exception {
+        setMessage(getText(MESSAGE));
+        return SUCCESS;
+    }
 
     /**
      * Return Message property.

@@ -7,82 +7,88 @@
     <jsp:include page="common/Head.jsp"></jsp:include>
 </head>
 <body>
-    <jsp:include page="common/Navigation.jsp"></jsp:include>
-    <div class='container' style='min-height: 450px'><div class='row'><div class='col-md-12'>
+<jsp:include page="common/Navigation.jsp"></jsp:include>
+<div class='container' style='min-height: 450px'>
+    <div class='row'>
+        <div class='col-md-12'>
 
-        <h2>
-            <i class='fa fa-list'></i> Available Products
-            <span class='pull-right'>
+            <h2>
+                <i class='fa fa-list'></i> Available Products
+                <span class='pull-right'>
                 <a href='#' class='btn btn-primary' data-toggle="modal" data-target="#searchModal">Search Product</a>
                 <a href='<s:url action="addEditProduct"/>' class='btn btn-primary'>Add Product</a>
             </span>
-        </h2>
+            </h2>
 
-        <s:if test="searchQuery != null">
-            <p class="bg-success">
-<%--                Reflected XSS--%>
-<%--                Fixes here prevents Stored XSS but it will not work on its own when user input is put in an eval or <script> tag or when user input is put into the DOM tree and so on--%>
-                Listing products with <strong>search query: <s:if test="!safe">
-</strong> <%= request.getParameter("searchQuery") %>
-    </s:if>
-    <s:else><%String query= request.getParameter("searchQuery"); %>
-        </strong><c:out value="${query}"></c:out>
-    </s:else>
-                &nbsp; &nbsp;
-                <small><a href="<s:url action="listProduct"/>">
-                    <i class="fa fa-remove"></i> Clear
-                </a></small>
-            </p>
-        </s:if>
+            <s:if test="searchQuery != null">
+                <p class="bg-success">
+                        <%--                Reflected XSS--%>
+                        <%--                Fixes here prevents Stored XSS but it will not work on its own when user input is put in an eval or <script> tag or when user input is put into the DOM tree and so on--%>
+                    Listing products with <strong>search query:
+                    <s:if test="!safe">
+                </strong> <%= request.getParameter("searchQuery") %>
+                    </s:if>
+                    <s:else><%String query = request.getParameter("searchQuery"); %>
+                        </strong><c:out value="${query}"></c:out>
+                    </s:else>
+                    &nbsp; &nbsp;
+                    <small><a href="<s:url action="listProduct"/>">
+                        <i class="fa fa-remove"></i> Clear
+                    </a></small>
+                </p>
+            </s:if>
 
-        <table class='table'>
-            <tr>
-                <th>#</th>
-                <th width='50%'>Name</th>
-                <th>Code</th>
-                <th>Tags</th>
-                <th></th>
-            </tr>
-            <s:iterator value="products">
-            <tr>
-                <td><s:property value="id"/></td>
-<%--                Stored XSS sink--%>
-                <s:if test="safe">
-                    <td><s:property value="name"/></td>
-                </s:if>
-<s:else>
-    <td><s:property value="name" escape="false"/></td>
-</s:else>
-                <td><s:property value="code"/></td>
-                <td><s:property value="tags"/></td>
-                <td>
-                    <a href='<s:url action="addEditProduct"><s:param name="productId"><s:property value="id"/></s:param></s:url>'>Edit</a>
-                </td>
-            </tr>
-            </s:iterator>
-        </table>
+            <table class='table'>
+                <tr>
+                    <th>#</th>
+                    <th width='50%'>Name</th>
+                    <th>Code</th>
+                    <th>Tags</th>
+                    <th></th>
+                </tr>
+                <s:iterator value="products">
+                    <tr>
+                        <td><s:property value="id"/></td>
+                            <%--                Stored XSS sink--%>
+                        <s:if test="safe">
+                            <td><s:property value="name"/></td>
+                        </s:if>
+                        <s:else>
+                            <td><s:property value="name" escape="false"/></td>
+                        </s:else>
+                        <td><s:property value="code"/></td>
+                        <td><s:property value="tags"/></td>
+                        <td>
+                            <a href='<s:url action="addEditProduct"><s:param name="productId"><s:property value="id"/></s:param></s:url>'>Edit</a>
+                        </td>
+                    </tr>
+                </s:iterator>
+            </table>
 
-        <div class="modal fade" tabindex="-1" role="dialog" id="searchModal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Search Product</h4>
-                    </div>
-                    <div class="modal-body">
-                        <s:form action="listProduct" method="post" theme="bootstrap">
-                            <s:textfield
-                                    label="Query"
-                                    name="searchQuery"
-                                    placeholder="Search by product code"/>
-                            <s:submit cssClass="btn btn-primary"/>
-                        </s:form>
+            <div class="modal fade" tabindex="-1" role="dialog" id="searchModal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Search Product</h4>
+                        </div>
+                        <div class="modal-body">
+                            <s:form action="listProduct" method="post" theme="bootstrap">
+                                <s:textfield
+                                        label="Query"
+                                        name="searchQuery"
+                                        placeholder="Search by product code"/>
+                                <s:submit cssClass="btn btn-primary"/>
+                            </s:form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        </div></div></div>
-    <jsp:include page="common/Footer.jsp"></jsp:include>
+        </div>
+    </div>
+</div>
+<jsp:include page="common/Footer.jsp"></jsp:include>
 </body>
 </html>

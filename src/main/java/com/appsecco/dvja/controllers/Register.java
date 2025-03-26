@@ -42,16 +42,16 @@ public class Register extends BaseController {
         return passwordConfirmation;
     }
 
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setPasswordConfirmation(String passwordConfirmation) {
-        this.passwordConfirmation = passwordConfirmation;
     }
 
     public UserRegistrationService getUserRegistrationService() {
@@ -63,18 +63,18 @@ public class Register extends BaseController {
     }
 
     public void validate() {
-        if(!getServletRequest().getMethod().equalsIgnoreCase("POST"))
+        if (!getServletRequest().getMethod().equalsIgnoreCase("POST"))
             return;
 
-        if(StringUtils.isEmpty(getName()))
+        if (StringUtils.isEmpty(getName()))
             addFieldError("name", "Name is required");
-        if(StringUtils.isEmpty(getLogin()))
+        if (StringUtils.isEmpty(getLogin()))
             addFieldError("login", "Login is required");
-        if(StringUtils.isEmpty(getPassword()))
+        if (StringUtils.isEmpty(getPassword()))
             addFieldError("password", "Password is required");
-        if(StringUtils.isEmpty(getPasswordConfirmation()))
+        if (StringUtils.isEmpty(getPasswordConfirmation()))
             addFieldError("passwordConfirmation", "Password confirmation is required");
-        if(!StringUtils.equals(getPassword(), getPasswordConfirmation()))
+        if (!StringUtils.equals(getPassword(), getPasswordConfirmation()))
             addFieldError("password", "Password must match confirmation");
     }
 
@@ -84,12 +84,11 @@ public class Register extends BaseController {
         try {
             user = userRegistrationService.register(getName(), getLogin(), getEmail(),
                     getPassword(), getPasswordConfirmation());
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             addActionError("Error Occurred: " + e.getMessage());
         }
 
-        if(user != null) {
+        if (user != null) {
             return SUCCESS;
         }
 

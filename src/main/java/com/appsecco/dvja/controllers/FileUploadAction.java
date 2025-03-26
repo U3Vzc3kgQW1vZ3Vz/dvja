@@ -1,18 +1,18 @@
 package com.appsecco.dvja.controllers;
 
 import com.appsecco.dvja.services.SafeModeService;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.struts2.ServletActionContext;
 
 import java.io.*;
 import java.nio.file.Files;
-import org.apache.commons.io.FilenameUtils;
 
 public class FileUploadAction extends BaseController {
+    public String outputPath;
     private String fileFileName;
     private File file;
     private String name;
     private String fileContentType;
-    public String outputPath;
 
     public String uploadFile() throws IOException {
         byte[] bytes = new byte[(int) getFile().length()];
@@ -24,45 +24,45 @@ public class FileUploadAction extends BaseController {
         }
         String rootPath = ServletActionContext.getServletContext().getRealPath("/upload");
 
-            FileInputStream inputStream = new FileInputStream(getFile());
-            inputStream.read(bytes);
-            File dir = new File(rootPath + File.separator);
-            if (!dir.exists())
-                dir.mkdirs();
+        FileInputStream inputStream = new FileInputStream(getFile());
+        inputStream.read(bytes);
+        File dir = new File(rootPath + File.separator);
+        if (!dir.exists())
+            dir.mkdirs();
 
-            // Create the file on server
-            File serverFile = new File(dir.getAbsolutePath()
-                    + File.separator + fileFileName);
+        // Create the file on server
+        File serverFile = new File(dir.getAbsolutePath()
+                + File.separator + fileFileName);
         System.out.println(Files.probeContentType(getFile().toPath()));
         System.out.println(FilenameUtils.getExtension(getFile().getName()));
         System.out.println(getFile().getName());
-            if(SafeModeService.isSafe()){
-                if(!serverFile.getParent().equals(new File(rootPath).getAbsolutePath())){
-                    throw new IOException(", not a file in allowed path");
-                }
-                if(!Files.probeContentType(getFile().toPath()).startsWith("image")) {
-                    throw new IOException(", Invalid file type");
-                }
-                if(!(FilenameUtils.getExtension(fileFileName).equals("jpg")
-                        ||FilenameUtils.getExtension(fileFileName).equals("jpeg")
-                ||FilenameUtils.getExtension(fileFileName).equals("png")
-            ||FilenameUtils.getExtension(fileFileName).equals("gif")
-                        ||FilenameUtils.getExtension(fileFileName).equals("bmp")
-            ||FilenameUtils.getExtension(fileFileName).equals("webp"))
-                ) {
-                    throw new IOException(", Invalid file extension");
-                }
+        if (SafeModeService.isSafe()) {
+            if (!serverFile.getParent().equals(new File(rootPath).getAbsolutePath())) {
+                throw new IOException(", not a file in allowed path");
             }
-            BufferedOutputStream stream = new BufferedOutputStream(
-                    new FileOutputStream(serverFile));
-            stream.write(bytes);
-            stream.close();
-            if (inputStream != null) {
-                inputStream.close();
+            if (!Files.probeContentType(getFile().toPath()).startsWith("image")) {
+                throw new IOException(", Invalid file type");
             }
-            //            System.out.println("Server File Location="
-            //                     serverFile.getAbsolutePath());
-            return ServletActionContext.getRequest().getContextPath() + "upload/" + getName();
+            if (!(FilenameUtils.getExtension(fileFileName).equals("jpg")
+                    || FilenameUtils.getExtension(fileFileName).equals("jpeg")
+                    || FilenameUtils.getExtension(fileFileName).equals("png")
+                    || FilenameUtils.getExtension(fileFileName).equals("gif")
+                    || FilenameUtils.getExtension(fileFileName).equals("bmp")
+                    || FilenameUtils.getExtension(fileFileName).equals("webp"))
+            ) {
+                throw new IOException(", Invalid file extension");
+            }
+        }
+        BufferedOutputStream stream = new BufferedOutputStream(
+                new FileOutputStream(serverFile));
+        stream.write(bytes);
+        stream.close();
+        if (inputStream != null) {
+            inputStream.close();
+        }
+        //            System.out.println("Server File Location="
+        //                     serverFile.getAbsolutePath());
+        return ServletActionContext.getRequest().getContextPath() + "upload/" + getName();
     }
 
     public String execute() {
@@ -74,17 +74,17 @@ public class FileUploadAction extends BaseController {
         try {
             setOutputPath(uploadFile());
         } catch (IOException e) {
-            addFieldError("name", "Invalid path or file"+e.getMessage());
+            addFieldError("name", "Invalid path or file" + e.getMessage());
         }
         return SUCCESS;
     }
 
-    public void setFile(File file) {
-        this.file = file;
-    }
-
     public File getFile() {
         return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
     }
 
     public String getName() {
@@ -102,9 +102,11 @@ public class FileUploadAction extends BaseController {
     public void setFileContentType(String contentType) {
         this.fileContentType = contentType;
     }
+
     public String getFileFileName() {
         return fileFileName;
     }
+
     public void setFileFileName(String fileFileName) {
         this.fileFileName = fileFileName;
     }

@@ -43,10 +43,10 @@ public class Login extends BaseController {
     public String execute() {
         User user;
 
-        if(StringUtils.isEmpty(getLogin()) || StringUtils.isEmpty(getPassword()))
+        if (StringUtils.isEmpty(getLogin()) || StringUtils.isEmpty(getPassword()))
             return INPUT;
 
-        if((user = userAuthenticationService.authenticate(getLogin(), getPassword())) != null) {
+        if ((user = userAuthenticationService.authenticate(getLogin(), getPassword())) != null) {
             sessionSetUser(user);
             return SUCCESS;
         }

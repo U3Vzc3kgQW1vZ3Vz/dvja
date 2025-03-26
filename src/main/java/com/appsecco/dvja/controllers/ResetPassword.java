@@ -52,7 +52,7 @@ public class ResetPassword extends BaseController {
     }
 
     public String requestResetPassword() {
-        if(StringUtils.isEmpty(getLogin()))
+        if (StringUtils.isEmpty(getLogin()))
             return INPUT;
 
         // Execute reset password request
@@ -61,10 +61,10 @@ public class ResetPassword extends BaseController {
     }
 
     public String execute() {
-        if(StringUtils.isEmpty(getLogin()) || StringUtils.isEmpty(getKey()))
+        if (StringUtils.isEmpty(getLogin()) || StringUtils.isEmpty(getKey()))
             addActionError("Login or key parameter missing");
 
-        if(StringUtils.isEmpty(getLogin()) || StringUtils.isEmpty(getKey()) ||
+        if (StringUtils.isEmpty(getLogin()) || StringUtils.isEmpty(getKey()) ||
                 StringUtils.isEmpty(getPassword()) || StringUtils.isEmpty(getPasswordConfirmation()))
             return INPUT;
 
@@ -73,13 +73,12 @@ public class ResetPassword extends BaseController {
         try {
             ret = userService.resetPasswordByLogin(getLogin(), getKey(),
                     getPassword(), getPasswordConfirmation());
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             addActionError("Exception ocurred: " + e.getMessage());
             return INPUT;
         }
 
-        if(!ret) {
+        if (!ret) {
             addActionError("Error occurred while changing password");
             return INPUT;
         }

@@ -10,11 +10,11 @@
     <include file="example.xml"/>
 
     <package name="default" namespace="/" extends="struts-default">
-        
+
         <interceptors>
             <interceptor name="authenticationInterceptor"
                          class="com.appsecco.dvja.interceptors.AuthenticationInterceptor"/>
-            
+
             <interceptor-stack name="authenticationStack">
                 <interceptor-ref name="authenticationInterceptor"/>
                 <interceptor-ref name="defaultStack"/>
@@ -37,12 +37,12 @@
                 <param name="location">/</param>
             </result>
         </action>
-        <action name="safe" class="com.appsecco.dvja.controllers.SafeModeAction" >
+        <action name="safe" class="com.appsecco.dvja.controllers.SafeModeAction">
             <result type="plainText"/>
         </action>
 
         <action name="getSafeState" class="com.appsecco.dvja.controllers.SafeModeAction" method="getSafeState">
-                <result type="plainText"></result>
+            <result type="plainText"></result>
         </action>
 
         <action name="register" class="com.appsecco.dvja.controllers.Register">
@@ -93,7 +93,8 @@
             </result>
         </action>
 
-        <action name="resetPasswordStart" class="com.appsecco.dvja.controllers.ResetPassword" method="requestResetPassword">
+        <action name="resetPasswordStart" class="com.appsecco.dvja.controllers.ResetPassword"
+                method="requestResetPassword">
             <result name="input">/WEB-INF/dvja/ResetPasswordStart.jsp</result>
             <result>/WEB-INF/dvja/ResetPasswordSuccess.jsp</result>
         </action>
@@ -216,17 +217,17 @@
             <result>/WEB-INF/dvja/PathTraverse.jsp</result>
             <interceptor-ref name="authenticationStack"/>
         </action>
-    <action name="upload" class="com.appsecco.dvja.controllers.FileUploadAction">
-        <result name="input">/WEB-INF/dvja/FileUpload.jsp</result>
-        <result>/WEB-INF/dvja/FileUpload.jsp</result>
-        <interceptor-ref name="authenticationStack"/>
-    </action>
-    <action name="netUpload" class="com.appsecco.dvja.controllers.NetFileUploadAction">
-        <result name="input">/WEB-INF/dvja/NetFileUpload.jsp</result>
-        <result>/WEB-INF/dvja/NetFileUpload.jsp</result>
-        <interceptor-ref name="authenticationStack"/>
-    </action>
-        <action name="safe" class="com.appsecco.dvja.controllers.SafeModeAction" >
+        <action name="upload" class="com.appsecco.dvja.controllers.FileUploadAction">
+            <result name="input">/WEB-INF/dvja/FileUpload.jsp</result>
+            <result>/WEB-INF/dvja/FileUpload.jsp</result>
+            <interceptor-ref name="authenticationStack"/>
+        </action>
+        <action name="netUpload" class="com.appsecco.dvja.controllers.NetFileUploadAction">
+            <result name="input">/WEB-INF/dvja/NetFileUpload.jsp</result>
+            <result>/WEB-INF/dvja/NetFileUpload.jsp</result>
+            <interceptor-ref name="authenticationStack"/>
+        </action>
+        <action name="safe" class="com.appsecco.dvja.controllers.SafeModeAction">
             <result type="plainText"/>
         </action>
 
@@ -234,13 +235,13 @@
             <result type="plainText"></result>
         </action>
         <action name="welcome" class="com.appsecco.dvja.controllers.TemplateAction">
-            <result name="input" >/WEB-INF/dvja/TemplateHandler.jsp</result>
-            <result >/WEB-INF/dvja/TemplateHandler.jsp</result>
+            <result name="input">/WEB-INF/dvja/TemplateHandler.jsp</result>
+            <result>/WEB-INF/dvja/TemplateHandler.jsp</result>
             <interceptor-ref name="authenticationStack"/>
         </action>
         <action name="serialize" class="com.appsecco.dvja.controllers.SerializableAction">
-            <result name="input" >/WEB-INF/dvja/Cookie.jsp</result>
-            <result >/WEB-INF/dvja/Cookie.jsp</result>
+            <result name="input">/WEB-INF/dvja/Cookie.jsp</result>
+            <result>/WEB-INF/dvja/Cookie.jsp</result>
             <interceptor-ref name="authenticationStack"/>
         </action>
 

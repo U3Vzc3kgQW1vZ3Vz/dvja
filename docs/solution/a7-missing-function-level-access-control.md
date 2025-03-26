@@ -1,6 +1,7 @@
 # Missing Function Level Access Control
 
-The issue lies in _userList_ API implementation where the code does not correctly establish identity and capability for the calling user before fullfiling the request.
+The issue lies in _userList_ API implementation where the code does not correctly establish identity and capability for
+the calling user before fullfiling the request.
 
 ```java
 public String adminShowUsers() {
@@ -47,7 +48,9 @@ $ curl -H "Cookie: admin=1" http://dvja:8080/api/userList
 
 ## Solution
 
-Implement appropriate authentication and authorization for every function that can be directly or indirectly called from external sources. Application designer or developer should not assume that a function which is not exposed directly will never be called.
+Implement appropriate authentication and authorization for every function that can be directly or indirectly called from
+external sources. Application designer or developer should not assume that a function which is not exposed directly will
+never be called.
 
 In this specific case, the issue can be solved by validating if the calling user is authorized to invoke the API.
 

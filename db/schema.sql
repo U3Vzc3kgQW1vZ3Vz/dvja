@@ -22,22 +22,22 @@
 DROP TABLE IF EXISTS `products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `products` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `description` text NOT NULL,
-  `code` varchar(45) NOT NULL,
-  `tags` text DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
-  UNIQUE KEY `code_UNIQUE` (`code`)
+CREATE TABLE `products`
+(
+    `id`          int(11) NOT NULL AUTO_INCREMENT,
+    `name`        varchar(100) NOT NULL,
+    `description` text         NOT NULL,
+    `code`        varchar(45)  NOT NULL,
+    `tags`        text DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `id_UNIQUE` (`id`),
+    UNIQUE KEY `code_UNIQUE` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `products`
 --
-
 
 
 --
@@ -47,15 +47,16 @@ CREATE TABLE `products` (
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `login` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(200) NOT NULL,
-  `role` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `login_UNIQUE` (`login`)
+CREATE TABLE `users`
+(
+    `id`       int(11) NOT NULL AUTO_INCREMENT,
+    `name`     varchar(100) NOT NULL,
+    `login`    varchar(100) NOT NULL,
+    `email`    varchar(100) NOT NULL,
+    `password` varchar(200) NOT NULL,
+    `role`     varchar(45) DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `login_UNIQUE` (`login`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

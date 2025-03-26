@@ -9,7 +9,7 @@
 <struts>
     <package name="example" namespace="/example" extends="struts-default">
 
-        <default-action-ref name="HelloWorld" />
+        <default-action-ref name="HelloWorld"/>
 
         <action name="HelloWorld" class="com.appsecco.example.HelloWorld">
             <result>/WEB-INF/example/HelloWorld.jsp</result>

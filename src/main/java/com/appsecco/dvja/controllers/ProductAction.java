@@ -4,11 +4,9 @@ import com.appsecco.dvja.models.Product;
 import com.appsecco.dvja.services.ProductService;
 import com.appsecco.dvja.services.SafeModeService;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.List;
 
 public class ProductAction extends BaseController {
@@ -62,12 +60,14 @@ public class ProductAction extends BaseController {
     public boolean isSearchQueryAvailable() {
         return (!StringUtils.isEmpty(searchQuery));
     }
-    public boolean isSafeMode(){
+
+    public boolean isSafeMode() {
         return SafeModeService.isSafe();
     }
+
     public String list() {
 
-        if(StringUtils.isEmpty(searchQuery))
+        if (StringUtils.isEmpty(searchQuery))
             products = productService.findAll();
         else
             products = productService.findContainingName(searchQuery);
@@ -76,16 +76,16 @@ public class ProductAction extends BaseController {
     }
 
     public String execute() {
-        if(!StringUtils.isEmpty(getProductId()) && (product == null)) {
+        if (!StringUtils.isEmpty(getProductId()) && (product == null)) {
             product = productService.find(Integer.parseInt(getProductId()));
             return INPUT;
         }
 
-        if(getProduct() == null)
+        if (getProduct() == null)
             return INPUT;
 
         try {
-            if(isSafeMode()){
+            if (isSafeMode()) {
                 HttpServletRequest request = ServletActionContext.getRequest();
                 // Get token values from request and session
                 String requestToken = request.getParameter("token");
@@ -102,8 +102,7 @@ public class ProductAction extends BaseController {
 
             productService.save(product);
             return SUCCESS;
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             addActionError("Error Occurred: " + e.getMessage());
             return INPUT;
         }

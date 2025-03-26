@@ -18,7 +18,7 @@ public class UserAuthenticationService {
         User user;
 
         user = userService.findByLogin(login);
-        if((user != null) && userService.checkPassword(user, password))
+        if ((user != null) && userService.checkPassword(user, password))
             return user;
 
         return null;

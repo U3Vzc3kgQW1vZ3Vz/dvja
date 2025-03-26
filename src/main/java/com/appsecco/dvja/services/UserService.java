@@ -1,17 +1,12 @@
 package com.appsecco.dvja.services;
 
 import com.appsecco.dvja.models.User;
+import com.mysql.jdbc.PreparedStatement;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
-
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
-import org.springframework.transaction.annotation.Transactional;
-
-import com.mysql.jdbc.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,7 +18,6 @@ public class UserService {
     private static final Logger logger = Logger.getLogger(UserService.class);
 
 
-
     public void save(User user) {
         logger.debug("Saving user with login: " + user.getLogin() + " id: " + user.getId());
         ResultSet rs = null;
@@ -31,34 +25,33 @@ public class UserService {
         ArrayList<User> resultList = new ArrayList<User>();
         if (user.getPassword() != null)
             user.setPassword(hashEncodePassword(user.getPassword()));
-User newUser = findByLogin(user.getLogin());
+        User newUser = findByLogin(user.getLogin());
 
-            if (DbConnectionService.open()) {
+        if (DbConnectionService.open()) {
 
-                try {
-                    if (newUser == null) {
-                        String queryString = "INSERT INTO users (id,name,login,email,password) VALUES (default,?, ?, ?,?)";
-                        pstmt = (PreparedStatement) DbConnectionService.cnn.prepareStatement(queryString);
-                        pstmt.setString(2, user.getLogin());
-                        pstmt.setString(1, user.getName());
-                        pstmt.setString(4, user.getPassword());
-                        pstmt.setString(3, user.getEmail());
-                    }
-                    else {
-                        String queryString = "UPDATE users set password=? where id=?";
-                        pstmt = (PreparedStatement) DbConnectionService.cnn.prepareStatement(queryString);
-                        pstmt.setString(1, user.getPassword());
-                        pstmt.setInt(2, newUser.getId());
-                    }
-                    boolean user_added = pstmt.execute();
-                    System.out.println(pstmt.toString());
-
-                } catch (SQLException e) {
-                                    System.out.println(pstmt.toString());
-                } finally {
-                    DbConnectionService.close(pstmt, rs);
+            try {
+                if (newUser == null) {
+                    String queryString = "INSERT INTO users (id,name,login,email,password) VALUES (default,?, ?, ?,?)";
+                    pstmt = (PreparedStatement) DbConnectionService.cnn.prepareStatement(queryString);
+                    pstmt.setString(2, user.getLogin());
+                    pstmt.setString(1, user.getName());
+                    pstmt.setString(4, user.getPassword());
+                    pstmt.setString(3, user.getEmail());
+                } else {
+                    String queryString = "UPDATE users set password=? where id=?";
+                    pstmt = (PreparedStatement) DbConnectionService.cnn.prepareStatement(queryString);
+                    pstmt.setString(1, user.getPassword());
+                    pstmt.setInt(2, newUser.getId());
                 }
+                boolean user_added = pstmt.execute();
+                System.out.println(pstmt.toString());
+
+            } catch (SQLException e) {
+                System.out.println(pstmt.toString());
+            } finally {
+                DbConnectionService.close(pstmt, rs);
             }
+        }
 
     }
 
@@ -83,7 +76,7 @@ User newUser = findByLogin(user.getLogin());
                     resultList.add(user);
                 }
             } catch (SQLException e) {
-                                System.out.println(pstmt.toString());
+                System.out.println(pstmt.toString());
             } finally {
                 DbConnectionService.close(pstmt, rs);
             }
@@ -125,7 +118,7 @@ User newUser = findByLogin(user.getLogin());
                     resultList.add(user);
                 }
             } catch (SQLException e) {
-                                System.out.println(pstmt.toString());
+                System.out.println(pstmt.toString());
             } finally {
                 DbConnectionService.close(pstmt, rs);
             }
@@ -157,7 +150,7 @@ User newUser = findByLogin(user.getLogin());
                     resultList.add(user);
                 }
             } catch (SQLException e) {
-                                System.out.println(pstmt.toString());
+                System.out.println(pstmt.toString());
             } finally {
                 DbConnectionService.close(pstmt, rs);
             }
@@ -169,12 +162,13 @@ User newUser = findByLogin(user.getLogin());
         else
             return null;
     }
-//SQL injection sink
+
+    //SQL injection sink
     public User findByLoginUnsafe(String login) {
         List<User> resultList = new ArrayList<>();
         ResultSet rs = null;
         PreparedStatement pstmt = null;
-        String queryString = "SELECT * FROM users where login = '"+login+"'";
+        String queryString = "SELECT * FROM users where login = '" + login + "'";
         if (DbConnectionService.open()) {
             try {
                 pstmt = (PreparedStatement) DbConnectionService.cnn.prepareStatement(queryString);
@@ -190,12 +184,11 @@ User newUser = findByLogin(user.getLogin());
                     resultList.add(user);
                 }
             } catch (SQLException e) {
-                                System.out.println(pstmt.toString());
+                System.out.println(pstmt.toString());
 
             } finally {
                 DbConnectionService.close(pstmt, rs);
             }
-
 
 
         }
@@ -205,31 +198,31 @@ User newUser = findByLogin(user.getLogin());
             return null;
     }
 
-        public boolean resetPasswordByLogin (String login, String key,
-                String password, String passwordConfirmation){
+    public boolean resetPasswordByLogin(String login, String key,
+                                        String password, String passwordConfirmation) {
 
-            if (!StringUtils.equals(password, passwordConfirmation))
-                return false;
-
-            if (!StringUtils.equalsIgnoreCase(DigestUtils.md5DigestAsHex(login.getBytes()), key))
-                return false;
-
-            logger.info("Changing password for login: " + login +
-                    " New password: " + password);
-
-            User user = findByLogin(login);
-            if (user != null) {
-                user.setPassword(password);
-                save(user);
-
-                return true;
-            }
-
-            logger.info("Failed to find user with login: " + login);
+        if (!StringUtils.equals(password, passwordConfirmation))
             return false;
+
+        if (!StringUtils.equalsIgnoreCase(DigestUtils.md5DigestAsHex(login.getBytes()), key))
+            return false;
+
+        logger.info("Changing password for login: " + login +
+                " New password: " + password);
+
+        User user = findByLogin(login);
+        if (user != null) {
+            user.setPassword(password);
+            save(user);
+
+            return true;
         }
 
-        private String hashEncodePassword (String password){
-            return DigestUtils.md5DigestAsHex(password.getBytes());
-        }
+        logger.info("Failed to find user with login: " + login);
+        return false;
     }
+
+    private String hashEncodePassword(String password) {
+        return DigestUtils.md5DigestAsHex(password.getBytes());
+    }
+}

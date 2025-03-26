@@ -20,7 +20,7 @@ public class BaseController extends ActionSupport implements ServletRequestAware
     private Map<String, Object> session;
 
     public Map<String, Object> getSession() {
-        if(session == null)
+        if (session == null)
             session = ActionContext.getContext().getSession();
         return session;
     }
@@ -34,13 +34,13 @@ public class BaseController extends ActionSupport implements ServletRequestAware
         return servletRequest;
     }
 
-    public boolean isAuthenticated() {
-        return (sessionGetUser() != null);
-    }
-
     @Override
     public void setServletRequest(HttpServletRequest servletRequest) {
         this.servletRequest = servletRequest;
+    }
+
+    public boolean isAuthenticated() {
+        return (sessionGetUser() != null);
     }
 
     public void sessionSetUser(User user) {

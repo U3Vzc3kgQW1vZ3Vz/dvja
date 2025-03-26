@@ -3,7 +3,6 @@ package com.appsecco.dvja.models;
 import org.apache.commons.lang.StringUtils;
 
 
-
 public class User {
 
     private Integer id;
@@ -17,8 +16,6 @@ public class User {
     private String email;
 
     private String password;
-
-
 
 
     public Integer getId() {

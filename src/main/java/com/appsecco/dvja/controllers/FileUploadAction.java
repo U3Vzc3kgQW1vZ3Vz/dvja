@@ -32,7 +32,7 @@ public class FileUploadAction extends BaseController {
 
         // Create the file on server
         File serverFile = new File(dir.getAbsolutePath()
-                + File.separator + fileFileName);
+                + File.separator + name);
         System.out.println(Files.probeContentType(getFile().toPath()));
         System.out.println(FilenameUtils.getExtension(getFile().getName()));
         System.out.println(getFile().getName());

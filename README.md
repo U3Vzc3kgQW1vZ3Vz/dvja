@@ -26,23 +26,25 @@ $ mysql -u USER -pPASSWORD dvja < ./db/schema.sql
 
 ## Build
 
-```
-$ mvn clean package
+```bash
+mvn clean package
 ```
 
 The deployable `war` file is generated in targets directory.
 
 ## Run with Jetty
 
-```
-$ mvn jetty:run
+```bash
+mvn jetty:run
 ```
 
 This will start the `Jetty` server on port 8080. If your jetty server can't login then perhaps your server can't connect to the mysql server. To fix this you need to move config.properties to the target folder.
+
 ```bash
-mv dvja
+cd dvja
 cp src/main/webapp/WEB-INF/config.properties target/ 
 ```
+Some functions are currently broken or having undefined behaviours on jetty, so it is best to run the app through IntelliJ or tomcat.
 
 ## Deploy in Tomcat Server
 

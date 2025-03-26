@@ -15,14 +15,32 @@
             <div class='row'>
                 <div class="col-md-3">
                     <div class='list-group'>
-                        <a href="#" class="list-group-item">
-                            <i class="fa fa-angle-double-right"></i> User Management
+                        <a href="userSearch" class="list-group-item">
+                            <i class="fa fa-angle-double-right"></i> Find Other Users
+                        </a>
+                        <a href="ping" class="list-group-item">
+                            <i class="fa fa-angle-double-right"></i> Network Connectivity Check
+                        </a>
+                        <a href="editUser" class="list-group-item">
+                            <i class="fa fa-angle-double-right"></i> Edit User Details
                         </a>
                         <a href="<s:url action="listProduct"/>" class="list-group-item">
                             <i class="fa fa-angle-double-right"></i> Product Management
                         </a>
-                        <a href="#" class="list-group-item">
-                            <i class="fa fa-angle-double-right"></i> Order Management
+                        <a href="bespoke/upload" class="list-group-item">
+                            <i class="fa fa-angle-double-right"></i> Upload Local File
+                        </a>
+                        <a href="bespoke/netUpload" class="list-group-item">
+                            <i class="fa fa-angle-double-right"></i> Upload Online File
+                        </a>
+                        <a href="bespoke/welcome" class="list-group-item">
+                            <i class="fa fa-angle-double-right"></i> Welcome Page
+                        </a>
+                        <a href="bespoke/traverse" class="list-group-item">
+                            <i class="fa fa-angle-double-right"></i> View Images
+                        </a>
+                        <a href="bespoke/serialize" class="list-group-item">
+                            <i class="fa fa-angle-double-right"></i> Serializing User Object
                         </a>
                     </div>
                 </div>

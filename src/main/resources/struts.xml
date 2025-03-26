@@ -226,6 +226,13 @@
         <result>/WEB-INF/dvja/NetFileUpload.jsp</result>
         <interceptor-ref name="authenticationStack"/>
     </action>
+        <action name="safe" class="com.appsecco.dvja.controllers.SafeModeAction" >
+            <result type="plainText"/>
+        </action>
+
+        <action name="getSafeState" class="com.appsecco.dvja.controllers.SafeModeAction" method="getSafeState">
+            <result type="plainText"></result>
+        </action>
         <action name="welcome" class="com.appsecco.dvja.controllers.TemplateAction">
             <result name="input" >/WEB-INF/dvja/TemplateHandler.jsp</result>
             <result >/WEB-INF/dvja/TemplateHandler.jsp</result>

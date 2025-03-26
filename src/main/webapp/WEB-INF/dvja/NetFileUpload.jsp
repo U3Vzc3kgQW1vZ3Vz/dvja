@@ -34,7 +34,9 @@
       <div class='row'>
         <div class='col-md-12'>
           <s:if test="%{textOutput.equals('Not Valid URL')}">
-            <s:property value="textOutput"></s:property>
+            <h2>
+              <s:property value="textOutput"></s:property>
+            </h2>
           </s:if>
           <s:elseif test="%{textOutput!=null}">
             <a href="/<s:property value="textOutput"></s:property>"> <s:property

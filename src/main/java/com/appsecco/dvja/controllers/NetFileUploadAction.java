@@ -1,8 +1,10 @@
 package com.appsecco.dvja.controllers;
 
+import com.appsecco.dvja.services.SafeModeService;
 import org.apache.struts2.ServletActionContext;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -20,6 +22,24 @@ public class NetFileUploadAction extends BaseController {
         File serverFile = new File(dir.getAbsolutePath()+File.separator + "output.jpg");
 try{
     URL url = new URL(getUrl());
+    if(SafeModeService.isSafe()){
+        String host=url.getHost();
+        InetAddress inetAddress = InetAddress.getByName(host);
+        String protocol=url.getProtocol();
+        if(!protocol.equals("https")&&!protocol.equals("http")){
+            return "Not Valid URL";
+        }
+        if(inetAddress.isLoopbackAddress()||inetAddress.isLinkLocalAddress()){
+            return "Not Valid URL";
+
+        }
+        if(inetAddress.isAnyLocalAddress()){
+            return "Not Valid URL";
+        }
+        if(inetAddress.isSiteLocalAddress()){
+            return "Not Valid URL";
+        }
+    }
     //SSRF sink
     URLConnection conn = url.openConnection();
     in = conn.getInputStream();
@@ -32,7 +52,6 @@ try{
 } catch (MalformedURLException e) {
     serverFile.delete();
     return "Not Valid URL";
-
 }
 finally {
     if (out != null) {

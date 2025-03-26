@@ -22,8 +22,15 @@
     <s:fielderror theme="bootstrap"/>
 
     <s:form action="addEditProduct" method="post" theme="bootstrap">
+
         <s:if test="product.id">
             <s:hidden name="product.id"/>
+        </s:if>
+        <s:if test="%{safeMode}">
+        <h3>
+            SafeMode is on
+        </h3>
+        <s:token name="token"></s:token>
         </s:if>
         <s:textfield
             label="Product Name"

@@ -20,6 +20,12 @@
 
             <s:form action="editUser" method="post" theme="bootstrap">
 <%--                IDOR sink--%>
+                <s:if test="%{safeMode}">
+                    <h3>
+                        SafeMode is on
+                    </h3>
+                    <s:token name="token"></s:token>
+                </s:if>
                 <s:hidden name="userId" />
                 <s:textfield
                     label="Email"

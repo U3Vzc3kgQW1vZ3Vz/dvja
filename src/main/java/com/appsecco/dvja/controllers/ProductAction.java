@@ -5,7 +5,9 @@ import com.appsecco.dvja.services.ProductService;
 import com.appsecco.dvja.services.SafeModeService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.struts2.ServletActionContext;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +17,7 @@ public class ProductAction extends BaseController {
     private Product product;
     private List<Product> products;
     private ProductService productService;
-    private boolean safe;
+    private boolean safeMode;
 
     public String getSearchQuery() {
         return searchQuery;
@@ -60,8 +62,11 @@ public class ProductAction extends BaseController {
     public boolean isSearchQueryAvailable() {
         return (!StringUtils.isEmpty(searchQuery));
     }
-
+    public boolean isSafeMode(){
+        return SafeModeService.isSafe();
+    }
     public String list() {
+
         if(StringUtils.isEmpty(searchQuery))
             products = productService.findAll();
         else
@@ -80,6 +85,16 @@ public class ProductAction extends BaseController {
             return INPUT;
 
         try {
+            if(isSafeMode()){
+                HttpServletRequest request = ServletActionContext.getRequest();
+                // Get token values from request and session
+                String requestToken = request.getParameter("token");
+                String sessionToken = (String) super.getSession().get("struts.tokens.token");
+                if (sessionToken == null || requestToken == null || !sessionToken.equals(requestToken)) {
+                    addActionError("Invalid CSRF Token. Possible CSRF attack detected!");
+                    return INPUT; // Redirect to an error page
+                }
+            }
             /*return renderText("Updating id: " + product.getId() +
                     " Product: " + ReflectionToStringBuilder.toString(product));*/
             //product.setCreatedAt(new Date());
@@ -92,8 +107,5 @@ public class ProductAction extends BaseController {
             addActionError("Error Occurred: " + e.getMessage());
             return INPUT;
         }
-    }
-    public boolean isSafe() {
-        return SafeModeService.isSafe();
     }
 }

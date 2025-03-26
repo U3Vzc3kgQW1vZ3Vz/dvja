@@ -4,6 +4,10 @@ import com.appsecco.dvja.models.User;
 import com.appsecco.dvja.services.SafeModeService;
 import com.appsecco.dvja.services.UserService;
 import org.apache.commons.lang.StringUtils;
+import org.apache.struts2.ServletActionContext;
+
+import javax.servlet.http.HttpServletRequest;
+
 
 public class UserAction extends BaseController {
 
@@ -14,6 +18,7 @@ public class UserAction extends BaseController {
     private String passwordConfirmation;
     private String email;
     private int userId;
+    private boolean safeMode;
 
     public UserService getUserService() {
         return userService;
@@ -71,38 +76,54 @@ public class UserAction extends BaseController {
         this.email = email;
     }
 
-    public String edit() {
- if(SafeModeService.isSafe()){
-     if (getUserId()==0){
-addFieldError("userId","You must select a user");
-return INPUT;
-     }
-     if(getUserId() != sessionGetUser().getId()){
-         addFieldError("userId", "You are not logged as the user");
-         return INPUT;
-     }
-     if(sessionGetUser() != null) {
-         setUser(sessionGetUser());
-         setUserId(getUser().getId());
-         setEmail(getUser().getEmail());
-     }
- }
+    public boolean isSafeMode() {
+        return SafeModeService.isSafe();
+    }
 
-        if(StringUtils.isEmpty(getPassword()) || StringUtils.isEmpty(getPasswordConfirmation()))
+    public String edit() {
+        if (StringUtils.isEmpty(getPassword()) || StringUtils.isEmpty(getPasswordConfirmation()))
             return INPUT;
 
-        if(! getPassword().equals(getPasswordConfirmation())) {
+        if (isSafeMode()) {
+            HttpServletRequest request = ServletActionContext.getRequest();
+            // Get token values from request and session
+            String requestToken = request.getParameter("token");
+            String sessionToken = (String) super.getSession().get("struts.tokens.token");
+
+            // CSRF Validation: Check if the request token matches the session token
+
+            if (getUserId() != sessionGetUser().getId() && getUserId() >0) {
+                addFieldError("userId", "You are not logged as the user");
+                return INPUT;
+            }
+            if (sessionGetUser() != null) {
+                setUser(sessionGetUser());
+                setUserId(getUser().getId());
+                setEmail(getUser().getEmail());
+            }
+            else return INPUT;
+            if (sessionToken == null || requestToken == null || !sessionToken.equals(requestToken)) {
+                addActionError("Invalid CSRF Token. Possible CSRF attack detected!");
+                return INPUT; // Redirect to an error page
+            }
+        }
+
+        if (!getPassword().equals(getPasswordConfirmation())) {
             addFieldError("password", "does not match confirmation");
             return INPUT;
         }
 //IDOR Sink
-        user = userService.find(getUserId());
-        if(user == null) {
+        if(getUserId()<=0) {
+            user = userService.find(sessionGetUser().getId());
+        }else {
+            user = userService.find(getUserId());
+        }
+        if (user == null) {
             addActionError("Failed to find user with id: " + getUserId());
             return INPUT;
         }
 
-        if(! StringUtils.isEmpty(getEmail()))
+        if (!StringUtils.isEmpty(getEmail()))
             user.setEmail(getEmail());
 
         user.setPassword(getPassword());
@@ -113,21 +134,20 @@ return INPUT;
     }
 
     public String search() {
-        if(StringUtils.isEmpty(getLogin()))
+        if (StringUtils.isEmpty(getLogin()))
             return INPUT;
 
         try {
-            if(SafeModeService.isSafe()){
+            if (SafeModeService.isSafe()) {
                 user = userService.findByLogin(getLogin());
             } else {
                 user = userService.findByLoginUnsafe(getLogin());
             }
-            if(user == null) {
+            if (user == null) {
                 addFieldError("login", "User not found by login: " + getLogin());
                 return INPUT;
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             addActionError("Error Occurred: " + e.getMessage());
             return INPUT;
         }

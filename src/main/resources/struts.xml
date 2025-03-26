@@ -62,7 +62,9 @@
 
         <action name="userSearch" class="com.appsecco.dvja.controllers.UserAction" method="search">
             <interceptor-ref name="authenticationStack"/>
+
             <result name="input">/WEB-INF/dvja/UserSearch.jsp</result>
+
             <result>/WEB-INF/dvja/UserSearch.jsp</result>
         </action>
 

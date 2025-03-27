@@ -36,7 +36,7 @@
                 <div class='col-md-12'>
                     <hr/>
                     <s:if test="%{name!=null}">
-                        <pre><s:property value="name"/></pre>
+                        <pre>Welcome <s:property value="name"/></pre>
                     </s:if>
                     <s:else>
                         <h2>

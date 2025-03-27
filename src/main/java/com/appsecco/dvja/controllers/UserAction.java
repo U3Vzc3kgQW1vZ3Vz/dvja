@@ -90,8 +90,6 @@ public class UserAction extends BaseController {
             String requestToken = request.getParameter("token");
             String sessionToken = (String) super.getSession().get("struts.tokens.token");
 
-            // CSRF Validation: Check if the request token matches the session token
-
             if (getUserId() != sessionGetUser().getId() && getUserId() > 0) {
                 addFieldError("userId", "You are not logged as the user");
                 return INPUT;
@@ -101,9 +99,10 @@ public class UserAction extends BaseController {
                 setUserId(getUser().getId());
                 setEmail(getUser().getEmail());
             } else return INPUT;
+            // CSRF Validation: Check if the request token matches the session token
             if (sessionToken == null || requestToken == null || !sessionToken.equals(requestToken)) {
                 addActionError("Invalid CSRF Token. Possible CSRF attack detected!");
-                return INPUT; // Redirect to an error page
+                return INPUT;
             }
         }
 
@@ -148,7 +147,7 @@ public class UserAction extends BaseController {
             }
 
         } catch (Exception e) {
-            addFieldError("login " ,e.getMessage());
+            addFieldError("login ", e.getMessage());
             return INPUT;
         }
 

@@ -14,7 +14,7 @@ public String execute() {
 
 An attacker can exploit this vulnerability using an URL such as below:
 
-```
+```http
 http://dvja:8080/redirect.action?url=http://mail.yahoo.com
 ```
 
@@ -28,6 +28,3 @@ provided below:
 if(! getUrl().startsWith("/"))
     return renderText("External URL redirection not supported");
 ```
-
-
-

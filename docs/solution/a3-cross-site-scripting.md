@@ -4,7 +4,7 @@
 
 A Cross-site scripting vulnerability exists in the following URL:
 
-```
+```url
 http://dvja:8080/listProduct.action
 ```
 
@@ -27,6 +27,13 @@ Struts2 taglib can be used to render an action parameter in JSP securely with ap
 
 ```java
 <s:property value="searchQuery"/>
+```
+
+Or we use the JSTL tag <c:out> to render the query with proper encoding, as shown below:
+
+```java
+<%String query = request.getParameter("searchQuery"); %>
+<c:out value="${query}"></c:out>
 ```
 
 ## Stored XSS in Product Listing

@@ -3,6 +3,11 @@ package com.appsecco.dvja.controllers;
 import com.appsecco.dvja.services.SafeModeService;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.struts2.ServletActionContext;
+import org.apache.tika.Tika;
+import org.apache.tika.config.TikaConfig;
+import org.apache.tika.detect.Detector;
+import org.apache.tika.io.TikaInputStream;
+import org.apache.tika.metadata.Metadata;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -13,6 +18,14 @@ public class FileUploadAction extends BaseController {
     private File file;
     private String name;
     private String fileContentType;
+    public static String getContentType(byte[] fileBytes, String filenameWithExtension) throws IOException {
+        TikaConfig config = TikaConfig.getDefaultConfig();
+        Detector detector = config.getDetector();
+        TikaInputStream stream = TikaInputStream.get(new ByteArrayInputStream(fileBytes));
+        Metadata metadata = new Metadata();
+        metadata.add(Metadata.RESOURCE_NAME_KEY, filenameWithExtension);
+        return detector.detect(stream, metadata).toString();
+    }
 
     public String uploadFile() throws IOException {
         byte[] bytes = new byte[(int) getFile().length()];
@@ -22,6 +35,7 @@ public class FileUploadAction extends BaseController {
         if (brokenDownString.length < 2) {
             setName(getName() + ".jpg");
         }
+        Tika tika = new Tika();
         String rootPath = ServletActionContext.getServletContext().getRealPath("/upload");
 
         FileInputStream inputStream = new FileInputStream(getFile());
@@ -33,14 +47,14 @@ public class FileUploadAction extends BaseController {
         // Create the file on server
         File serverFile = new File(dir.getAbsolutePath()
                 + File.separator + name);
-        System.out.println(Files.probeContentType(getFile().toPath()));
-        System.out.println(FilenameUtils.getExtension(getFile().getName()));
-        System.out.println(getFile().getName());
+//        System.out.println(Files.probeContentType(getFile().toPath()));
+//        System.out.println(FilenameUtils.getExtension(getFile().getName()));
+//        System.out.println(getFile().getName());
         if (SafeModeService.isSafe()) {
             if (!serverFile.getParent().equals(new File(rootPath).getAbsolutePath())) {
                 throw new IOException(", not a file in allowed path");
             }
-            if (!Files.probeContentType(getFile().toPath()).startsWith("image")) {
+            if (!getContentType(bytes,getFile().getName()).startsWith("image")) {
                 throw new IOException(", Invalid file type");
             }
             if (!(FilenameUtils.getExtension(fileFileName).equals("jpg")

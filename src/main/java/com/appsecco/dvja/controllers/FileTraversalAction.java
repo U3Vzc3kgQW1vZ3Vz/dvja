@@ -3,6 +3,7 @@ package com.appsecco.dvja.controllers;
 import com.appsecco.dvja.services.SafeModeService;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
+import org.apache.struts2.ServletActionContext;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,15 +31,13 @@ public class FileTraversalAction extends BaseController {
     }
 
     public void getFile() throws IOException {
-        String BASE_PATH = "/../../../docs/assets/";
-        String path = this.getClass().getClassLoader().getResource("").getPath();
-        String fullPath = URLDecoder.decode(path, "UTF-8");
-        String pathArr[] = fullPath.split("/classes/");
-        fullPath = pathArr[0];
-        File file = new File(fullPath + BASE_PATH + getPath());
+
+        String rootPath = ServletActionContext.getServletContext().getRealPath("/upload");
+
+        File file = new File(rootPath+File.separator+getPath());
         if (file.exists()) {
             if (SafeModeService.isSafe()) {
-                if (!file.getParent().equals(new File(fullPath + BASE_PATH).getAbsolutePath())) {
+                if (!file.getParent().equals(new File(rootPath+File.separator).getAbsolutePath())) {
                     throw new IOException(", not a file in allowed path");
                 }
             }

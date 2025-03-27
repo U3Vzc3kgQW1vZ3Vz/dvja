@@ -48,23 +48,21 @@ public class ApiAction extends BaseController {
 
     public String adminShowUsers() {
         Map results = new HashMap();
-        boolean isAdmin = false;
+        boolean authorized = false;
 
         if (SafeModeService.isSafe()) {
-            if (sessionGetUser().getName().equals("admin")) {
-                isAdmin = true;
-            }
+                authorized =sessionGetUser().isAdmin();
         } else {
             for (Cookie c : getServletRequest().getCookies()) {
 //            IDOR sink
                 if (c.getName().equals("admin") && c.getValue().equals("1")) {
-                    isAdmin = true;
+                    authorized = true;
                     break;
                 }
             }
         }
 
-        if (isAdmin) {
+        if (authorized) {
             List<Map<String, String>> userList = new ArrayList<Map<String, String>>();
 
             for (User u : userService.findAllUsers()) {
@@ -103,7 +101,11 @@ public class ApiAction extends BaseController {
         }
         if (role == 0) {
             results.put("role:", "no role");
-        } else {
+        }
+        else if (sessionGetUser()!=null&&sessionGetUser().isAdmin()) {
+            results.put("role:", "admin");
+        }
+        else {
             results.put("role:", Integer.toString(role));
         }
         User user = userService.findByLogin(getLogin());
@@ -133,7 +135,7 @@ public class ApiAction extends BaseController {
                 return renderJSON(results);
             }
         }
-        String uri = "http://localhost:8088/api/ping?login=" + getLogin();
+        String uri = "http://"+getServletRequest().getLocalAddr()+":"+getServletRequest().getLocalPort()+"/api/ping?login=" + getLogin();
         try {
             URL url = new URL(uri);
             if (SafeModeService.isSafe()) {

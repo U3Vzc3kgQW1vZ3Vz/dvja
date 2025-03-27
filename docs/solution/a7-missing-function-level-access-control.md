@@ -55,8 +55,11 @@ never be called.
 In this specific case, the issue can be solved by validating if the calling user is authorized to invoke the API.
 
 ```java
-if(! sessionGetUser().isAdmin())
-    return NONE;
+if(! sessionGetUser().isAdmin()){
+        results.put("count", 0);
+        results.put("error", "Not authorized");
+}
+return renderJSON(results);
 ```
 
 

@@ -4,7 +4,7 @@
 
 The _ResetPassword_ functionality can be triggered by visiting an URL such as below:
 
-```
+```http
 http://dvja:8080/resetPasswordExecute.action?login=john.doe&key=abba0b6ff456806bab66baed93e6d9c4
 ```
 
@@ -14,13 +14,13 @@ which can be easily computed by an attacker.
 
 This issue can be exploited by an attacker to reset any user's password by using an URL such as below:
 
-```
+```http
 http://dvja:8080/resetPasswordExecute.action?login=<username>&key=<md5(username)>
 ```
 
 ### Solution
 
-* Implement a separate PasswordResetRequest service that persist a request in the database with appropriate expiry.
+* Implement a separate PasswordResetRequest service that persist a request in the database with appropriate expiry. Usually we implement this through emails to send password reset requests.
 * Store reference to user record for which password should be changed in the PasswordResetRequest record
 * Generate a random identifier for PasswordResetRequest record and allow this identifier as the only user supplied input
   during password reset. The system must fetch the other information required to execute the password reset from

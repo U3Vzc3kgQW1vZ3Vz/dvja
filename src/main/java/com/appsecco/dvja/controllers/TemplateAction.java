@@ -21,7 +21,7 @@ public class TemplateAction extends BaseController {
             StringWriter writer = new StringWriter();
 //            SSTI Sink
             if (Velocity.evaluate(context, writer, "test", name)) {
-                setName("lol " + name);
+                System.out.println("velocity is running");;
             }
         } catch (Exception e) {
 

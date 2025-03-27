@@ -69,5 +69,4 @@ public class User {
     public boolean isAdmin() {
         return StringUtils.equals(getRole(), "admin");
     }
-
 }

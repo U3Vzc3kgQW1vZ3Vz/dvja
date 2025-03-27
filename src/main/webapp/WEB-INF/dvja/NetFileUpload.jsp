@@ -33,23 +33,24 @@
 
             <div class='row'>
                 <div class='col-md-12'>
-                    <s:if test="%{textOutput.equals('Not Valid URL')}">
+
+                    <s:if test="%{textOutput==null}">
+                        <h2>
+                            Please upload a file
+                        </h2>
+                    </s:if>
+                    <s:elseif test="%{textOutput.equals('Not Valid URL')}">
                         <h2>
                             <s:property value="textOutput"></s:property>
                         </h2>
-                    </s:if>
-                    <s:elseif test="%{textOutput!=null}">
-                        <a href="/<s:property value="textOutput"></s:property>"> <s:property
-                                value="textOutput"></s:property></a>
+                    </s:elseif>
+                    <s:else>
+                        <a href="/<s:property value="textOutput"></s:property>">
+                            <s:property value="textOutput"></s:property></a>
                         <h2>Here's how your file looks like</h2>
                         <hr/>
 
                         <img src='/<s:property value="textOutput"/>'/>
-                    </s:elseif>
-                    <s:else>
-                        <h2>
-                            Please upload a file
-                        </h2>
                     </s:else>
 
                 </div>

